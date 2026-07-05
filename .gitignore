@@ -1,0 +1,47 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment variables
+.env
+
+# User project data
+projects/
+
+# Font files (large)
+fonts/AlibabaPuHuiTi/
+fonts/HarmonyOSSans/
+fonts/SourceHanSans-TTF/
+fonts/SourceHanSerif-TTF/
+fonts/Inter/
+fonts/subsets/
+
+# Frontend build
+frontend/node_modules/
+frontend/dist/
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+checkpoints.db
+data/
+
+# Uploaded files
+data/files/
+
+# Runtime logs
+celery.log
+*.log
+
+# Frontend TS build cache
+frontend/tsconfig*.tsbuildinfo
+
+# Git worktrees
+.worktrees/
+
+# System files
+.DS_Store
