@@ -20,26 +20,59 @@ class SourceDocument:
 @dataclass
 class SectionDef:
     """Definition of one section within a report template."""
-    id: str
-    heading: str
+    id: str = ""
+    heading: str = ""
     level: int = 1                            # 1=h1, 2=h2, ...
     prompt_hint: str = ""                     # LLM prompt guidance
     min_slides: int = 1
     max_slides: int = 3
     key_points: list[str] = field(default_factory=list)
     data_hints: list[str] = field(default_factory=list)
+    # Template-store oriented fields (Tasks 7-8)
+    key: str = ""
+    title: str = ""
+    required: bool = True
+    description: str = ""
+    source: str = "generated"
+    match_keywords: list[str] = field(default_factory=list)
+    max_matches: int = 3
+    fallback: str = "generated"
+    suggested_length: str = "medium"
+
+    def __post_init__(self):
+        # Backward compatibility: if id/heading are set but key/title aren't, sync them
+        if self.id and not self.key:
+            self.key = self.id
+        if self.heading and not self.title:
+            self.title = self.heading
+        if self.key and not self.id:
+            self.id = self.key
+        if self.title and not self.heading:
+            self.heading = self.title
 
 
 @dataclass
 class ReportTemplate:
     """A reusable report template with typed sections."""
-    id: str
-    name: str
+    id: str = ""
+    name: str = ""
     description: str = ""
     category: str = "general"
     sections: list[SectionDef] = field(default_factory=list)
     style_profile_id: Optional[str] = None
     metadata: dict[str, Any] = field(default_factory=dict)
+    # Template-store oriented fields (Tasks 7-8)
+    template_id: str = ""
+    parent_meta: Optional[str] = None
+    suggested_charts: list[str] = field(default_factory=list)
+    system_prompt: str = ""
+
+    def __post_init__(self):
+        # Backward compatibility: if id is set but template_id isn't, sync them
+        if self.id and not self.template_id:
+            self.template_id = self.id
+        if self.template_id and not self.id:
+            self.id = self.template_id
 
 
 @dataclass
@@ -149,7 +182,7 @@ class TemplateDeck:
 @dataclass
 class ReportIntent:
     """Parsed user intent for report generation."""
-    raw_query: str
+    raw_query: str = ""
     report_type: str = "general"
     topic: str = ""
     audience: str = ""
@@ -158,14 +191,24 @@ class ReportIntent:
     data_sources_needed: list[str] = field(default_factory=list)
     estimated_length: str = "medium"           # "short", "medium", "long"
     language: str = "zh-CN"
+    # Intent recognition fields (Task 9)
+    category: str = ""
+    period: str = ""
+    scope: str = ""
+    key_themes: list[str] = field(default_factory=list)
 
 
 @dataclass
 class TemplateRecommendation:
     """A template recommendation result."""
-    template: ReportTemplate
-    match_score: float
+    template: Optional[ReportTemplate] = None
+    match_score: float = 0.0
     match_reasons: list[str] = field(default_factory=list)
+    # Template-matcher oriented fields (Task 9)
+    template_id: str = ""
+    name: str = ""
+    match_reason: str = ""
+    is_selected: bool = False
 
 
 # ---------- export layer ----------
