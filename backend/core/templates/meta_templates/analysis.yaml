@@ -1,0 +1,39 @@
+template_id: meta_analysis
+name: 分析类报告
+category: 分析类
+description: 适用于市场分析、销售分析、客户分析、竞品分析等场景
+sections:
+  - key: background
+    title: 背景与目的
+    required: true
+    description: 分析的业务背景、数据范围、分析目标
+    source: generated
+    suggested_length: short
+  - key: data_overview
+    title: 数据概览
+    required: true
+    description: 数据来源、时间范围、关键指标总览
+    source: generated
+    suggested_length: medium
+  - key: dimension_analysis
+    title: 分维度分析
+    required: true
+    description: 按核心维度展开深度分析
+    source: generated
+    suggested_length: long
+  - key: findings
+    title: 关键发现
+    required: true
+    description: 核心洞察、异常点、趋势判断
+    source: generated
+    suggested_length: medium
+  - key: recommendations
+    title: 建议与下一步
+    required: false
+    description: 基于分析结论的行动建议
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个数据分析专家。请从数据源中提取关键数据，进行多维度分析。
+  所有数据必须来源于数据源，不得编造。
+suggested_charts: [bar, line, pie, table]

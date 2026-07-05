@@ -17,8 +17,10 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup/shutdown lifecycle for the FastAPI application."""
-    # Startup
+    # Startup — ensure data directories exist
     Path("data").mkdir(parents=True, exist_ok=True)
+    Path("data/exports").mkdir(parents=True, exist_ok=True)
+    Path("data/files").mkdir(parents=True, exist_ok=True)
     Path(settings.local_storage_path).mkdir(parents=True, exist_ok=True)
     await init_db()
     logger.info("Smart Reporting API started — database and storage ready")
@@ -43,9 +45,41 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
+# ---------------------------------------------------------------------------
+# API Routers
+# ---------------------------------------------------------------------------
+
+# Health check
 app.include_router(health_router, prefix="/api/v1")
 
-# Static file mount for uploaded files
+# Data sources — file upload, parse, manage
+from backend.api.routes.datasources import router as datasources_router  # noqa: E402
+app.include_router(datasources_router, prefix="/api/v1")
+
+# Enterprise PPT deck library — upload, search, manage
+from backend.api.routes.enterprise_ppt import router as enterprise_ppt_router  # noqa: E402
+app.include_router(enterprise_ppt_router, prefix="/api/v1")
+
+# Report templates — list and detail
+from backend.api.routes.templates import router as templates_router  # noqa: E402
+app.include_router(templates_router, prefix="/api/v1")
+
+# Reports — intent, generate (SSE), manage, chat-command, confirm
+from backend.api.routes.reports import router as reports_router  # noqa: E402
+app.include_router(reports_router, prefix="/api/v1")
+
+# Export — multi-format export and file download
+from backend.api.routes.export import router as export_router  # noqa: E402
+app.include_router(export_router, prefix="/api/v1")
+
+# PPT template — recommend and select template decks
+from backend.api.routes.ppt_template import router as ppt_template_router  # noqa: E402
+app.include_router(ppt_template_router, prefix="/api/v1")
+
+# ---------------------------------------------------------------------------
+# Static file mounts
+# ---------------------------------------------------------------------------
+
+# Serve uploaded files
 Path(settings.local_storage_path).mkdir(parents=True, exist_ok=True)
 app.mount("/static/files", StaticFiles(directory=settings.local_storage_path), name="static_files")

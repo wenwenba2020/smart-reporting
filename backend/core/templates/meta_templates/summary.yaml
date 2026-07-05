@@ -1,0 +1,39 @@
+template_id: meta_summary
+name: 总结类报告
+category: 总结类
+description: 适用于工作总结、述职报告、项目复盘等场景
+sections:
+  - key: overview
+    title: 总体回顾
+    required: true
+    description: 总结周期、工作范围、整体评价
+    source: generated
+    suggested_length: short
+  - key: achievements
+    title: 主要成果
+    required: true
+    description: 工作亮点、关键产出、量化成果
+    source: generated
+    suggested_length: long
+  - key: challenges
+    title: 遇到的挑战
+    required: true
+    description: 工作中遇到的主要困难和应对方式
+    source: generated
+    suggested_length: medium
+  - key: lessons_learned
+    title: 经验与反思
+    required: true
+    description: 从工作中提炼的经验教训和方法沉淀
+    source: generated
+    suggested_length: medium
+  - key: next_steps
+    title: 未来规划
+    required: true
+    description: 下一阶段的目标、计划和提升方向
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个企业管理顾问。请基于数据源中的工作记录，提炼关键成果和经验。
+  突出量化成果和可复用的方法论，反思要深入有意义，未来规划要具体可执行。
+suggested_charts: [bar, pie, timeline, table]

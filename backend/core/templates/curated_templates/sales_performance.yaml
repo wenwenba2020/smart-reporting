@@ -1,0 +1,53 @@
+template_id: curated_sales_performance
+name: 销售业绩报告
+category: 分析类
+parent_meta: meta_analysis
+description: 适用于销售团队业绩分析，涵盖个人/团队/区域/产品等多维度销售数据
+sections:
+  - key: sales_overview
+    title: 销售概览
+    required: true
+    description: 整体销售业绩、达成率、同比环比趋势
+    source: generated
+    suggested_length: short
+  - key: regional_analysis
+    title: 区域分析
+    required: true
+    description: 各区域的销售数据、市场占有率、增长潜力
+    source: generated
+    suggested_length: long
+  - key: product_analysis
+    title: 产品线分析
+    required: true
+    description: 各产品/服务的销售表现、毛利率、库存周转
+    source: generated
+    suggested_length: long
+  - key: team_performance
+    title: 团队/个人业绩
+    required: true
+    description: 各销售团队及个人的业绩排名与完成率
+    source: generated
+    suggested_length: medium
+  - key: customer_analysis
+    title: 客户分析
+    required: false
+    description: 新客获取、老客复购、客户流失、大客户贡献分析
+    source: generated
+    suggested_length: medium
+  - key: forecast
+    title: 销售预测
+    required: false
+    description: 基于趋势和管道的下期销售预测
+    source: generated
+    suggested_length: medium
+  - key: recommendations
+    title: 策略建议
+    required: true
+    description: 提升销售业绩的具体策略和行动方案
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个销售运营分析专家。请基于数据源中的销售数据，进行多维度深度分析。
+  所有数据必须真实来源于数据源，分析要揭示业务本质。
+  关注趋势变化和异常值，预测要有数据依据，建议要可落地执行。
+suggested_charts: [bar, line, pie, funnel, map, table]

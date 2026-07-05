@@ -1,0 +1,46 @@
+template_id: curated_kpi_employee
+name: 员工KPI报告
+category: 指标类
+parent_meta: meta_indicator
+description: 适用于员工个人KPI绩效考核与评估，涵盖关键指标达成与综合评价
+sections:
+  - key: employee_info
+    title: 员工基本信息
+    required: true
+    description: 姓名、部门、岗位、考核周期等基本信息
+    source: generated
+    suggested_length: short
+  - key: kpi_summary
+    title: KPI总览
+    required: true
+    description: 各项KPI指标的完成情况一览
+    source: generated
+    suggested_length: medium
+  - key: metric_detail
+    title: 指标逐项分析
+    required: true
+    description: 每项KPI的详细数据、达成率、趋势分析
+    source: generated
+    suggested_length: long
+  - key: behavior_assessment
+    title: 行为表现评估
+    required: false
+    description: 工作态度、团队协作、创新贡献等软性指标
+    source: generated
+    suggested_length: medium
+  - key: overall_rating
+    title: 综合评价与等级
+    required: true
+    description: 综合评分、绩效等级、突出贡献与待改进项
+    source: generated
+    suggested_length: medium
+  - key: development_plan
+    title: 发展建议
+    required: false
+    description: 职业发展方向、培训建议、下期目标
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个专业的HR绩效评估顾问。请基于数据源中的员工数据，客观公正地评估各项KPI完成情况。
+  评估要量化，评价要具体，建议要有针对性。注意保护员工隐私，评价语言要建设性。
+suggested_charts: [gauge, radar, bar, table]

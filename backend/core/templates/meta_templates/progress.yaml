@@ -1,0 +1,45 @@
+template_id: meta_progress
+name: 进度类报告
+category: 进度类
+description: 适用于项目进度、任务进度等场景
+sections:
+  - key: overview
+    title: 总体概况
+    required: true
+    description: 报告周期、项目总体状态、关键里程碑
+    source: generated
+    suggested_length: short
+  - key: completed_tasks
+    title: 已完成任务
+    required: true
+    description: 本期完成的任务清单与成果总结
+    source: generated
+    suggested_length: long
+  - key: in_progress
+    title: 进行中任务
+    required: true
+    description: 当前正在执行的任务进度与预计完成时间
+    source: generated
+    suggested_length: medium
+  - key: blocked
+    title: 阻塞与延期
+    required: false
+    description: 遇到阻塞或延期的任务及原因说明
+    source: generated
+    suggested_length: medium
+  - key: next_period
+    title: 下期计划
+    required: true
+    description: 下一阶段的工作计划与优先级
+    source: generated
+    suggested_length: medium
+  - key: risks
+    title: 风险与问题
+    required: false
+    description: 识别的潜在风险、已暴露的问题及应对措施
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个项目管理专家。请基于数据源中的任务和项目信息，准确汇总进度状态。
+  突出已完成成果，明确阻塞项和风险，给出清晰的下一阶段计划。
+suggested_charts: [bar, pie, gantt, table]

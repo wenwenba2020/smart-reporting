@@ -1,0 +1,47 @@
+template_id: curated_weekly_report
+name: 业务周报
+category: 进度类
+parent_meta: meta_progress
+description: 适用于团队每周业务进展汇报，快速同步重点工作与关键数据
+sections:
+  - key: weekly_summary
+    title: 本周概要
+    required: true
+    description: 本周整体情况一句话总结，核心亮点
+    source: generated
+    suggested_length: short
+  - key: key_tasks
+    title: 重点工作进展
+    required: true
+    description: 本周完成的重点任务、里程碑节点
+    source: generated
+    suggested_length: long
+  - key: data_metrics
+    title: 核心数据指标
+    required: true
+    description: 本周关键业务数据与变化趋势
+    source: generated
+    suggested_length: medium
+  - key: issues_risks
+    title: 问题与风险
+    required: false
+    description: 本周遇到的问题、待解决的风险项
+    source: generated
+    suggested_length: medium
+  - key: next_week_plan
+    title: 下周计划
+    required: true
+    description: 下周重点任务安排与优先级
+    source: generated
+    suggested_length: medium
+  - key: team_highlights
+    title: 团队亮点
+    required: false
+    description: 团队成员的突出贡献、值得分享的好消息
+    source: generated
+    suggested_length: short
+system_prompt: |
+  你是一个业务运营专家。请基于数据源中的周报数据，简洁清晰地总结本周工作。
+  突出关键进展和核心数据，问题要实事求是，计划要具体可执行。
+  保持周报的专业性和可读性，控制在2000字以内。
+suggested_charts: [bar, line, pie, table]

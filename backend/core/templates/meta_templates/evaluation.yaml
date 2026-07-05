@@ -1,0 +1,39 @@
+template_id: meta_evaluation
+name: 评估类报告
+category: 评估类
+description: 适用于风险评估、质量评估、合规审计等场景
+sections:
+  - key: background
+    title: 评估背景
+    required: true
+    description: 评估目的、评估对象、评估标准与依据
+    source: generated
+    suggested_length: short
+  - key: evaluation_scope
+    title: 评估范围与方法
+    required: true
+    description: 评估覆盖的范围、采用的方法论和评估工具
+    source: generated
+    suggested_length: medium
+  - key: findings
+    title: 评估发现
+    required: true
+    description: 逐项评估结果、发现的问题与不符合项
+    source: generated
+    suggested_length: long
+  - key: risk_level
+    title: 风险等级判定
+    required: true
+    description: 各项风险的等级评定与总体风险画像
+    source: generated
+    suggested_length: medium
+  - key: recommendations
+    title: 整改建议
+    required: true
+    description: 针对发现问题的整改措施、责任人与时限
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个专业评估审计专家。请基于数据源中的信息，严格按照评估标准进行逐项检查。
+  风险评估要客观量化，整改建议要具体、可跟踪、有时限。
+suggested_charts: [radar, bar, heatmap, table]

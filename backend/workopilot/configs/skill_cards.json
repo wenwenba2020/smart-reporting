@@ -1,0 +1,62 @@
+{
+  "cards": [
+    {
+      "skillCode": "report_generate",
+      "cardType": "report_editor",
+      "title": "报告编辑",
+      "description": "查看和编辑生成的报告内容",
+      "template": {
+        "type": "iframe",
+        "urlTemplate": "{{baseUrl}}/embed/report-editor?reportId={{reportId}}&token={{token}}&externalUserId={{userId}}&externalUserName={{userName}}",
+        "width": "100%",
+        "height": "600px"
+      },
+      "actions": [
+        {
+          "key": "view_report",
+          "label": "查看报告",
+          "urlTemplate": "{{baseUrl}}/embed/report-view?reportId={{reportId}}&token={{token}}"
+        },
+        {
+          "key": "download_pptx",
+          "label": "下载PPT",
+          "urlTemplate": "{{baseUrl}}/api/v1/export/download?reportId={{reportId}}&format=pptx&token={{token}}"
+        },
+        {
+          "key": "download_docx",
+          "label": "下载Word",
+          "urlTemplate": "{{baseUrl}}/api/v1/export/download?reportId={{reportId}}&format=docx&token={{token}}"
+        },
+        {
+          "key": "download_pdf",
+          "label": "下载PDF",
+          "urlTemplate": "{{baseUrl}}/api/v1/export/download?reportId={{reportId}}&format=pdf&token={{token}}"
+        }
+      ]
+    },
+    {
+      "skillCode": "report_export",
+      "cardType": "export_result",
+      "title": "导出结果",
+      "description": "报告导出结果展示",
+      "template": {
+        "type": "card",
+        "fields": [
+          {"key": "format", "label": "格式", "type": "text"},
+          {"key": "fileSize", "label": "文件大小", "type": "text"},
+          {"key": "downloadUrl", "label": "下载链接", "type": "link"}
+        ]
+      }
+    },
+    {
+      "skillCode": "data_analysis",
+      "cardType": "analysis_result",
+      "title": "分析结果",
+      "description": "数据分析结果展示",
+      "template": {
+        "type": "markdown",
+        "contentField": "analysisContent"
+      }
+    }
+  ]
+}

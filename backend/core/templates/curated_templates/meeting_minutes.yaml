@@ -1,0 +1,47 @@
+template_id: curated_meeting_minutes
+name: 会议纪要
+category: 总结类
+parent_meta: meta_summary
+description: 适用于各类会议的纪要记录，结构化记录会议核心内容与决议
+sections:
+  - key: meeting_info
+    title: 会议基本信息
+    required: true
+    description: 会议名称、时间、地点、主持人、参会人员
+    source: generated
+    suggested_length: short
+  - key: agenda
+    title: 会议议程
+    required: true
+    description: 会议议题列表及时间分配
+    source: generated
+    suggested_length: short
+  - key: discussion
+    title: 讨论要点
+    required: true
+    description: 各议题的核心讨论内容、各方观点、关键发言
+    source: generated
+    suggested_length: long
+  - key: decisions
+    title: 决议事项
+    required: true
+    description: 会议形成的主要决策和结论
+    source: generated
+    suggested_length: medium
+  - key: action_items
+    title: 待办事项
+    required: true
+    description: 待办任务、负责人、完成时限的明确清单
+    source: generated
+    suggested_length: medium
+  - key: next_meeting
+    title: 下次会议
+    required: false
+    description: 下次会议的时间、地点和主要议题预告
+    source: generated
+    suggested_length: short
+system_prompt: |
+  你是一个专业的会议记录员。请基于数据源中的会议录音或记录，准确提炼会议要点。
+  讨论内容要客观记录各方观点，决议和待办事项要清晰明确（含责任人和时限）。
+  语言要简洁专业，避免冗余描述。待办事项要可追踪。
+suggested_charts: [table]

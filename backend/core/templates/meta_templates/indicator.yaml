@@ -1,0 +1,39 @@
+template_id: meta_indicator
+name: 指标类报告
+category: 指标类
+description: 适用于KPI评估、绩效考核、指标报告等场景
+sections:
+  - key: overview
+    title: 总体概述
+    required: true
+    description: 报告目的、评估周期、整体结论
+    source: generated
+    suggested_length: short
+  - key: metric_detail
+    title: 指标详情
+    required: true
+    description: 各项关键指标的详细数据与达成情况
+    source: generated
+    suggested_length: long
+  - key: comparison
+    title: 对比分析
+    required: true
+    description: 与目标值、历史同期、行业基准的对比
+    source: generated
+    suggested_length: medium
+  - key: analysis
+    title: 原因分析
+    required: true
+    description: 指标达成或偏差的深层原因剖析
+    source: generated
+    suggested_length: medium
+  - key: suggestions
+    title: 改进建议
+    required: false
+    description: 针对未达标指标的改进措施与行动计划
+    source: generated
+    suggested_length: medium
+system_prompt: |
+  你是一个绩效管理专家。请基于数据源中的指标数据，客观评估各项指标完成情况。
+  对比分析要包含目标值和历史值，分析偏差原因，提出可落地的改进建议。
+suggested_charts: [bar, line, gauge, table, radar]

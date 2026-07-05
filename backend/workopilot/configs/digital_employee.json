@@ -1,0 +1,55 @@
+{
+  "robotCode": "smart_report_assistant",
+  "name": "智能报告助手",
+  "avatarUrl": "",
+  "welcomeMessage": "您好！我是智能报告助手，可以帮您分析业务数据，自动生成专业的企业报告（PPT/Word/PDF）。请提供您的数据或告诉我您的报告需求。",
+  "description": "面向企业用户的智能报告生成数字员工，支持多数据源接入、智能填报、多格式报告输出",
+  "intro": "一键生成企业专属智能报告，覆盖周报、月报、季报、年报、项目复盘等多种场景",
+  "businessLine": "productivity",
+  "isActive": true,
+  "systemPrompt": "你是一个专业的企业报告生成助手。你可以：1) 分析用户上传的数据文件（文本、表格、聊天记录等）；2) 理解用户的报告需求（周报、月报、季报、年报、项目复盘等）；3) 自动匹配最佳报告模板；4) 生成结构化的报告内容；5) 导出为 PPT、Word、PDF 等多种格式。请始终保持专业、准确、高效的服务态度。",
+  "skills": [
+    {
+      "skillCode": "report_generate",
+      "skillName": "智能报告生成",
+      "description": "根据用户需求和数据源自动生成结构化报告"
+    },
+    {
+      "skillCode": "report_export",
+      "skillName": "多格式导出",
+      "description": "将生成的报告导出为 PPT、Word、PDF 格式"
+    },
+    {
+      "skillCode": "data_analysis",
+      "skillName": "数据分析",
+      "description": "对上传的数据进行分析和汇总"
+    },
+    {
+      "skillCode": "template_match",
+      "skillName": "模板匹配",
+      "description": "根据报告需求智能推荐最佳模板"
+    }
+  ],
+  "model": "gpt-4",
+  "billing": {
+    "enabled": true,
+    "codes": {
+      "report_generate": 5,
+      "report_export": 2
+    }
+  },
+  "appMenus": [
+    {
+      "menuType": "iframe",
+      "displayMode": "fullscreen",
+      "menuKey": "report-editor",
+      "title": "报告工作台",
+      "icon": "lucide:file-text",
+      "routePath": "",
+      "sort": 1,
+      "isEnabled": true
+    }
+  ],
+  "enableShare": true,
+  "tags": ["报告", "PPT", "Word", "PDF", "数据分析", "企业办公"]
+}
