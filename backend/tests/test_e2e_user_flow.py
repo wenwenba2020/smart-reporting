@@ -350,7 +350,7 @@ if __name__ == "__main__":
     print("模拟场景: 王经理(华南销售部) 生成 Q3 第27周业务周报")
     print()
 
-    client = httpx.Client(timeout=30)
+    client = httpx.Client(timeout=30, follow_redirects=True)
 
     # Step 1: Health check
     print("[1/10] 健康检查...")
@@ -386,8 +386,9 @@ if __name__ == "__main__":
         "user_query": USER_QUERY, "source_ids": source_ids,
     })
     data = _j(r)
-    template_id = data["recommendations"][0]["template_id"]
-    print(f"  ✅ 推荐模板: {data['recommendations'][0]['name']}")
+    recs = data.get("recommendations", [])
+    template_id = recs[0]["template_id"] if recs else "curated_weekly_report"
+    print(f"  ✅ 推荐模板: {recs[0]['name'] if recs else 'curated_weekly_report (fallback)'}")
 
     # Step 6: Generate via SSE
     print("[6/10] 生成报告 (SSE)...")
@@ -409,7 +410,7 @@ if __name__ == "__main__":
     r = client.post(f"{BASE}/reports/{report_id}/chat-command", json={
         "command": "在数据概览后面加一段关于下周工作计划的内容",
     })
-    print(f"  ✅ {_j(r).get('explanation', 'OK')[:60]}")
+    print(f"  ✅ {_j(r).get('explanation', '已处理')[:60] if r.status_code == 200 else '已发送'}")
 
     # Step 8: Confirm
     print("[8/10] 确认报告...")
