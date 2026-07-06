@@ -31,6 +31,20 @@ export default defineConfig({
         changeOrigin: true,
         followRedirects: true,
       },
+      '/docs': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        followRedirects: true,
+      },
+      '/redoc': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        followRedirects: true,
+      },
+      '/openapi.json': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
       '/health': {
         target: 'http://localhost:8080',
         changeOrigin: true,

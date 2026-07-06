@@ -66,6 +66,28 @@ export function SettingsPanel() {
 
       {tab === 'system' && (
         <div className="space-y-4">
+          {/* API Documentation — top priority */}
+          <div className="p-4 rounded-xl border-2 border-primary/20 bg-primary/5">
+            <div className="flex items-start gap-4">
+              <BookOpen className="w-6 h-6 text-primary mt-0.5 shrink-0" />
+              <div className="flex-1">
+                <p className="text-sm font-semibold">API 文档</p>
+                <p className="text-xs text-muted-foreground mt-0.5 mb-3">完整的接口文档，含请求示例和响应格式（7大模块、30+端点）</p>
+                <div className="flex gap-4">
+                  <a href="/docs" target="_blank" className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors">
+                    <ExternalLink className="w-3.5 h-3.5" />Swagger UI
+                  </a>
+                  <a href="/redoc" target="_blank" className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-primary/30 text-primary text-xs font-medium hover:bg-primary/5 transition-colors">
+                    <ExternalLink className="w-3.5 h-3.5" />ReDoc
+                  </a>
+                  <a href="https://github.com/wenwenba2020/smart-reporting/blob/master/backend/api/docs.md" target="_blank" className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border/30 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                    <ExternalLink className="w-3.5 h-3.5" />Markdown 文档
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {CONFIG_ITEMS.map((item, i) => (
             <div key={i} className="flex items-start gap-4 p-4 rounded-xl border border-border/30 bg-card">
               <item.icon className="w-5 h-5 text-primary mt-0.5 shrink-0" />
@@ -77,24 +99,6 @@ export function SettingsPanel() {
             </div>
           ))}
 
-          {/* API Documentation Links */}
-          <div className="p-4 rounded-xl border border-border/30 bg-card">
-            <div className="flex items-start gap-4">
-              <BookOpen className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-medium">API 文档</p>
-                <p className="text-xs text-muted-foreground/60 mt-0.5 mb-2">完整的接口文档，含请求示例和响应格式</p>
-                <div className="flex gap-3">
-                  <a href="/docs" target="_blank" className="flex items-center gap-1 text-xs text-primary hover:underline">
-                    <ExternalLink className="w-3 h-3" />Swagger UI
-                  </a>
-                  <a href="/redoc" target="_blank" className="flex items-center gap-1 text-xs text-primary hover:underline">
-                    <ExternalLink className="w-3 h-3" />ReDoc
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       )}
 
