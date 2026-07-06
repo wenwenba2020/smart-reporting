@@ -2,8 +2,11 @@ import { SideNav } from './SideNav'
 import { useReportStore } from '@/stores/reportStore'
 import { useReportWorkflowStore } from '@/stores/reportWorkflowStore'
 import { DataSourceUploader } from '@/components/datasource/DataSourceUploader'
+import { DataSourceManager } from '@/components/datasource/DataSourceManager'
+import { ReportHistory } from '@/components/report/ReportHistory'
+import { TemplateBrowser } from '@/components/template/TemplateBrowser'
+import { SettingsPanel } from '@/components/layout/SettingsPanel'
 import { ReportWorkspace } from '@/components/layout/ReportWorkspace'
-import { Clock, Database, Layout, Settings } from 'lucide-react'
 
 export function AppShell() {
   const { navSection } = useReportStore()
@@ -20,30 +23,10 @@ export function AppShell() {
 
       <main className="flex-1 overflow-y-auto">
         {navSection === 'create' && <DataSourceUploader />}
-        {navSection === 'history' && (
-          <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
-            <Clock className="w-12 h-12 opacity-20" />
-            <p className="text-sm">报告历史功能即将上线</p>
-          </div>
-        )}
-        {navSection === 'datasources' && (
-          <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
-            <Database className="w-12 h-12 opacity-20" />
-            <p className="text-sm">数据源管理功能即将上线</p>
-          </div>
-        )}
-        {navSection === 'templates' && (
-          <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
-            <Layout className="w-12 h-12 opacity-20" />
-            <p className="text-sm">模板管理功能即将上线</p>
-          </div>
-        )}
-        {navSection === 'settings' && (
-          <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
-            <Settings className="w-12 h-12 opacity-20" />
-            <p className="text-sm">系统设置功能即将上线</p>
-          </div>
-        )}
+        {navSection === 'history' && <ReportHistory />}
+        {navSection === 'datasources' && <DataSourceManager />}
+        {navSection === 'templates' && <TemplateBrowser />}
+        {navSection === 'settings' && <SettingsPanel />}
       </main>
     </div>
   )
