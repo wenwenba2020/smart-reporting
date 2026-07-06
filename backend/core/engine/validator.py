@@ -58,9 +58,12 @@ class ReportValidator:
                 "issues": issues,
                 "overall_quality": overall_quality,
             }
-        except Exception:
+        except Exception as e:
             return {
-                "is_consistent": True,
-                "issues": [],
-                "overall_quality": "needs_revision",
+                "is_consistent": False,
+                "issues": [{"section": "global", "severity": "high",
+                            "description": f"一致性校验未能完成 (LLM调用失败: {str(e)[:100]})",
+                            "suggestion": "请检查 LLM API 配置后重新生成报告"}],
+                "overall_quality": "unvalidated",
+                "error": str(e)[:200],
             }

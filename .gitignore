@@ -45,3 +45,4 @@ frontend/tsconfig*.tsbuildinfo
 
 # System files
 .DS_Store
+.env

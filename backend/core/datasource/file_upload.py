@@ -182,5 +182,5 @@ class FileUploadAdapter(DataSourceAdapter):
         return (
             f"[Image: {filename}]\n"
             f"Dimensions: {w}x{h}\n"
-            f"Note: Image content requires OCR processing for text extraction."
+            f"注意: 图片OCR功能尚未集成。请通过喔壳附件提取功能上传图片以获得结构化文本。"
         )

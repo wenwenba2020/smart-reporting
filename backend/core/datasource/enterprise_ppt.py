@@ -221,7 +221,13 @@ class EnterprisePPTAdapter(DataSourceAdapter):
 
         try:
             for master in prs.slide_masters:
-                # Check first layout's placeholders for font info
+                # Extract theme colors from slide master
+                try:
+                    theme = master.slide_layouts[0] if master.slide_layouts else None
+                except Exception:
+                    theme = None
+
+                # Check layout placeholders for font info and fills
                 for layout in master.slide_layouts:
                     for ph in layout.placeholders:
                         if ph.has_text_frame:
@@ -233,13 +239,31 @@ class EnterprisePPTAdapter(DataSourceAdapter):
                                             font_heading = fname
                                         else:
                                             font_body = fname
-                                        break  # first font found per placeholder
-                    if font_heading != "Arial" or font_body != "Arial":
+                                        break
+                            # Extract fill colors from shapes
+                            try:
+                                fill = ph.fill
+                                if fill and fill.type is not None:
+                                    try:
+                                        fc = fill.fore_color
+                                        if fc and fc.type is not None:
+                                            rgb = str(fc.rgb) if hasattr(fc, 'rgb') else None
+                                            if rgb and rgb not in color_palette:
+                                                color_palette.append(f"#{rgb}")
+                                    except Exception:
+                                        pass
+                            except Exception:
+                                pass
+                    if len(color_palette) >= 6:
                         break
-                if font_heading != "Arial" or font_body != "Arial":
+                if len(color_palette) >= 3:
                     break
         except Exception:
-            logger.warning("Could not extract font info from slide masters; using defaults")
+            logger.warning("Could not extract style info from slide masters; using defaults")
+
+        if not color_palette:
+            color_palette = ["#003366", "#0066CC", "#FFFFFF", "#333333"]
+        color_palette = color_palette[:6]
 
         # Extract slide dimensions
         w_emu = _safe_get(prs, "slide_width", 12192000)  # default 13.333" in EMU
