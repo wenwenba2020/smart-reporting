@@ -32,27 +32,32 @@ export function LLMConfig() {
   }, []);
 
   const loadStatus = async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
     try {
-      const r = await fetch('/api/v1/health/');
+      const r = await fetch('/api/v1/health', { signal: controller.signal });
       if (r.ok) {
-        // Get status from settings
         const r2 = await fetch('/api/v1/workopilot/run', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ serviceCode: 'report_intent', inputs: { user_query: 'test', source_ids: [] } }),
+          signal: controller.signal,
         });
         const data = await r2.json();
         setStatus({
           provider: 'openrouter',
           base_url: 'https://openrouter.ai/api/v1',
-          configured: data.intent?.report_type !== 'general' || data.intent?.category !== 'general',
+          configured: data.intent?.category && data.intent?.category !== 'general',
           default_model: 'anthropic/claude-sonnet-4-6',
           api_key_masked: '••••••••',
         });
+      } else {
+        setStatus({ provider: 'openrouter', base_url: '', configured: false, default_model: '', api_key_masked: '' });
       }
     } catch {
       setStatus({ provider: 'openrouter', base_url: '', configured: false, default_model: '', api_key_masked: '' });
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
     }
   };
