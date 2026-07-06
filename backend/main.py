@@ -76,6 +76,10 @@ app.include_router(export_router, prefix="/api/v1")
 from backend.api.routes.ppt_template import router as ppt_template_router  # noqa: E402
 app.include_router(ppt_template_router, prefix="/api/v1")
 
+# WorkoPilot AI service bridge
+from backend.workopilot.ai_service_bridge import router as workopilot_router  # noqa: E402
+app.include_router(workopilot_router, prefix="/api/v1")
+
 # ---------------------------------------------------------------------------
 # Static file mounts
 # ---------------------------------------------------------------------------

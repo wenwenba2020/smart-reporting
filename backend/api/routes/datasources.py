@@ -12,7 +12,9 @@ from backend.core.datasource import chat_export  # noqa: F401  trigger @register
 from backend.core.datasource import enterprise_ppt  # noqa: F401  trigger @register_adapter
 from backend.core.datasource import api_source  # noqa: F401  trigger @register_adapter
 from backend.core.datasource import mcp_source  # noqa: F401  trigger @register_adapter
-from backend.core.models import SourceDocument, RestApiSourceConfig, McpSourceConfig
+from backend.core.datasource import database_source  # noqa: F401  trigger @register_adapter
+from backend.core.datasource import rag_source  # noqa: F401  trigger @register_adapter
+from backend.core.models import SourceDocument, RestApiSourceConfig, McpSourceConfig, DatabaseSourceConfig
 
 router = APIRouter(prefix="/datasources", tags=["datasources"])
 
@@ -146,6 +148,12 @@ async def fetch_from_source(req: dict):
             tool_prompt=raw_config.get("tool_prompt", ""),
             session_id=raw_config.get("session_id", ""),
         )
+    elif source_type == "database":
+        config = DatabaseSourceConfig(
+            connection_string=raw_config.get("connection_string", ""),
+            query=raw_config.get("query", ""),
+            db_type=raw_config.get("db_type", "sqlite"),
+        )
     else:
         raise HTTPException(400, f"Fetch not supported for source type: {source_type}")
 
@@ -164,5 +172,44 @@ async def fetch_from_source(req: dict):
         "title": doc.title,
         "source_type": doc.source_type,
         "preview": preview,
+        "metadata": doc.metadata,
+    }
+
+
+@router.post("/rag/ingest")
+async def rag_ingest(req: dict):
+    """Ingest existing source documents into the RAG knowledge base.
+
+    Request: {"source_ids": ["src_001", "src_002"]}
+    """
+    source_ids = req.get("source_ids", [])
+    if not source_ids:
+        raise HTTPException(400, "source_ids is required")
+
+    from backend.core.datasource.rag_source import rag_kb
+    result = await rag_kb.ingest(source_ids, _source_store)
+    return {"data": result}
+
+
+@router.post("/rag/search")
+async def rag_search(req: dict):
+    """Semantic search the RAG knowledge base.
+
+    Request: {"query": "华南区Q3销售情况", "top_k": 5}
+    Returns a SourceDocument with concatenated relevant chunks.
+    """
+    query = req.get("query", "")
+    if not query:
+        raise HTTPException(400, "query is required")
+
+    top_k = req.get("top_k", 5)
+    from backend.core.datasource.rag_source import rag_kb
+    doc = await rag_kb.search(query, top_k, _source_store)
+    _source_store[doc.id] = doc
+    return {
+        "source_id": doc.id,
+        "title": doc.title,
+        "source_type": doc.source_type,
+        "preview": doc.content[:500],
         "metadata": doc.metadata,
     }

@@ -246,3 +246,11 @@ class McpSourceConfig:
     user_id: str                               # end-user identifier
     tool_prompt: str                           # natural-language prompt that triggers the MCP tool
     session_id: str = ""                       # optional: reuse an existing chat session
+
+
+@dataclass
+class DatabaseSourceConfig:
+    """Configuration for a direct database connection data source."""
+    connection_string: str                     # SQLAlchemy connection string
+    query: str                                 # SQL query to execute
+    db_type: str = "sqlite"                    # "sqlite" | "mysql" | "postgresql"
