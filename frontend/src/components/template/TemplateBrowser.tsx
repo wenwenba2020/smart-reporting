@@ -170,6 +170,12 @@ export function TemplateBrowser() {
                 {detail.is_custom && <span className="text-xs ml-2 px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700">自定义</span>}
               </div>
               <div className="flex gap-2">
+                {!detail.is_custom && (
+                  <button onClick={() => startEdit({...detail, name: detail.name + ' (自定义)', template_id: ''})}
+                    className="flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs rounded-lg hover:bg-primary/90">
+                    <Edit3 className="w-3 h-3" />基于此创建
+                  </button>
+                )}
                 {detail.is_custom && (
                   <>
                     <button onClick={() => startEdit(detail)} className="p-1.5 rounded hover:bg-accent"><Edit3 className="w-4 h-4" /></button>
