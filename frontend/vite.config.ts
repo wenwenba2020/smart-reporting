@@ -26,49 +26,16 @@ export default defineConfig({
     },
     // Proxy API requests to backend (avoids needing separate public port for API)
     proxy: {
-      '/auth': 'http://localhost:8002',
-      '/projects': 'http://localhost:8002',
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
       '/health': {
-        target: 'http://localhost:8000',
+        target: 'http://localhost:8080',
         changeOrigin: true,
       },
-      '/fonts': 'http://localhost:8002',
-      '/project-files': 'http://localhost:8002',
-      '/library': 'http://localhost:8002',
-      '/reports': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/datasources': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/templates': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/export': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/scenarios': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/knowledge': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/report-templates': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/smart-fill': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-      },
-      '/data-sources': {
-        target: 'http://localhost:8000',
+      '/files': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
       },
     },

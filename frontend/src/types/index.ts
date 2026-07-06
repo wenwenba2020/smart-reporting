@@ -143,3 +143,28 @@ export type SSEEvent =
   | SSEValidationEvent
   | SSESlideMatchEvent
   | SSEDoneEvent;
+
+// ── Enterprise PPT Library Types ────────────────────────────────
+
+export interface PPTDeck {
+  deck_id: string;
+  filename: string;
+  deck_type: string;  // "content" | "template"
+  slide_count: number;
+  category?: string;
+  name?: string;
+  is_default?: boolean;
+}
+
+export interface PPTSlide {
+  slide_id: string;
+  deck_id: string;
+  deck_name: string;
+  title: string;
+  slide_index: number;
+  section_type: string;  // "cover" | "toc" | "content" | "chart" | "ending"
+  content_summary: string;
+  topic_tags: string[];
+  has_chart: boolean;
+  has_table: boolean;
+}

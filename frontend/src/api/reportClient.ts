@@ -128,6 +128,82 @@ export const reportApi = {
       confirmed_at: string;
     }>(`/reports/${reportId}/confirm`, { method: 'POST' }),
 
+  // ── Enterprise PPT Library ────────────────────────────────────
+  uploadPPT: async (file: File, deckType: string = 'content') => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('deck_type', deckType);
+    const res = await fetch(`${BASE}/enterprise-ppt/upload`, {
+      method: 'POST',
+      body: fd,
+    });
+    if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+    return res.json() as Promise<{
+      deck_id: string;
+      filename: string;
+      deck_type: string;
+      slide_count: number;
+      slides: Array<{ slide_id: string; title: string; section_type: string }>;
+    }>;
+  },
+
+  listPPTDecks: () =>
+    request<{
+      data: Array<{
+        deck_id: string;
+        filename: string;
+        deck_type: string;
+        slide_count: number;
+        category: string;
+        name?: string;
+        is_default?: boolean;
+      }>;
+    }>('/enterprise-ppt/decks'),
+
+  getPPTDeck: (deckId: string) =>
+    request<{
+      deck_id: string;
+      filename: string;
+      deck_type: string;
+      slides: Array<{
+        slide_id: string;
+        title: string;
+        content_summary: string;
+        section_type: string;
+        topic_tags: string[];
+        slide_index: number;
+      }>;
+    }>(`/enterprise-ppt/decks/${deckId}`),
+
+  deletePPTDeck: (deckId: string) =>
+    request<{ deleted: string }>(`/enterprise-ppt/decks/${deckId}`, { method: 'DELETE' }),
+
+  searchPPTSlides: (q: string, sectionType?: string) => {
+    const params = new URLSearchParams({ q });
+    if (sectionType) params.set('section_type', sectionType);
+    return request<{
+      data: Array<{
+        slide_id: string;
+        deck_id: string;
+        deck_name: string;
+        title: string;
+        content_summary: string;
+        section_type: string;
+        topic_tags: string[];
+      }>;
+    }>(`/enterprise-ppt/slides/search?${params.toString()}`);
+  },
+
+  listPPTTemplates: () =>
+    request<{
+      data: Array<{
+        deck_id: string;
+        name: string;
+        filename: string;
+        is_default: boolean;
+      }>;
+    }>('/enterprise-ppt/templates'),
+
   // ── Export ───────────────────────────────────────────────────
   exportReport: (reportId: string, formats: string[]) =>
     request<{
