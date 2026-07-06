@@ -1,0 +1,49 @@
+template_id: curated_competitor_analysis
+name: 竞品分析报告
+category: 分析类
+parent_meta: meta_analysis
+description: 适用于竞品调研、竞争态势分析、产品对标分析、竞品动态监控等场景
+sections:
+- key: analysis_scope
+  title: 分析范围
+  required: true
+  description: 分析目标、竞品选择、对标维度、信息来源
+  source: generated
+  suggested_length: short
+- key: competitor_profiles
+  title: 竞品概况
+  required: true
+  description: 各竞品的基本信息、市场地位、核心能力
+  source: generated
+  suggested_length: medium
+- key: feature_comparison
+  title: 功能/特性对比
+  required: true
+  description: 多维度功能特性对比表和差距分析
+  source: generated
+  suggested_length: long
+- key: pricing_strategy
+  title: 定价与商业模式
+  required: false
+  description: 竞品定价策略、商业模式对比分析
+  source: generated
+  suggested_length: medium
+- key: swot_analysis
+  title: 优劣势分析
+  required: true
+  description: 我方相较于竞品的优势、劣势、机会、威胁
+  source: generated
+  suggested_length: medium
+- key: strategic_actions
+  title: 应对策略
+  required: true
+  description: 基于竞品分析的战略建议和行动方案
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个竞争情报分析师。客观、系统地分析竞争对手，找出差异化的机会和威胁，给出可执行的应对策略。
+suggested_charts:
+- radar
+- matrix
+- bar
+- comparison
+- table

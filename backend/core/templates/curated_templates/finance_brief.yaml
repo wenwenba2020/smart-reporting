@@ -1,0 +1,49 @@
+template_id: curated_finance_brief
+name: 财务简报
+category: 指标类
+parent_meta: meta_indicator
+description: 适用于月度/季度财务汇报、经营分析会、财务指标概览等场景
+sections:
+- key: executive_summary
+  title: 财务概要
+  required: true
+  description: 核心财务指标一览和总体评价
+  source: generated
+  suggested_length: short
+- key: revenue_analysis
+  title: 收入分析
+  required: true
+  description: 收入构成、同比增长、预算达成率、主要驱动因素
+  source: generated
+  suggested_length: long
+- key: cost_expense
+  title: 成本费用分析
+  required: true
+  description: 成本结构、费用明细、同比环比变化
+  source: generated
+  suggested_length: medium
+- key: profitability
+  title: 盈利能力
+  required: true
+  description: 毛利率、净利率、ROI等盈利能力指标分析
+  source: generated
+  suggested_length: medium
+- key: cash_flow
+  title: 现金流状况
+  required: false
+  description: 经营性/投资性/融资性现金流分析
+  source: generated
+  suggested_length: medium
+- key: risk_outlook
+  title: 风险与展望
+  required: true
+  description: 财务风险提示、下期预测、改进建议
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个财务分析专家。严格遵守会计准则，数据准确是第一原则。对异常波动重点关注并分析原因。所有数据必须来源于数据源。
+suggested_charts:
+- bar
+- line
+- waterfall
+- pie
+- table

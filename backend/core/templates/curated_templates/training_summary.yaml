@@ -1,0 +1,48 @@
+template_id: curated_training_summary
+name: 培训总结报告
+category: 总结类
+parent_meta: meta_summary
+description: 适用于企业培训项目总结、培训效果评估、年度培训复盘等场景
+sections:
+- key: training_overview
+  title: 培训概况
+  required: true
+  description: 培训主题、时间、参与人数、讲师、目标
+  source: generated
+  suggested_length: short
+- key: curriculum_design
+  title: 课程设计
+  required: false
+  description: 课程体系、内容安排、教学方式
+  source: generated
+  suggested_length: medium
+- key: attendance_engagement
+  title: 出勤与参与度
+  required: true
+  description: 出勤率、课堂互动、课后作业完成情况
+  source: generated
+  suggested_length: medium
+- key: learning_outcomes
+  title: 学习成果
+  required: true
+  description: 考核成绩、技能提升、知识掌握程度评估
+  source: generated
+  suggested_length: long
+- key: feedback_analysis
+  title: 学员反馈
+  required: true
+  description: 满意度调查结果、意见和建议汇总
+  source: generated
+  suggested_length: medium
+- key: improvement_suggestions
+  title: 改进建议
+  required: true
+  description: 课程优化、教学改进、后续跟进计划
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个培训评估专家。全面评估培训项目的设计、执行和效果，给出可操作的改进建议。
+suggested_charts:
+- bar
+- radar
+- pie
+- table

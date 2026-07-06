@@ -1,0 +1,47 @@
+template_id: curated_compliance_audit
+name: 合规审计报告
+category: 评估类
+parent_meta: meta_evaluation
+description: 适用于内部审计、合规检查、ISO审核、数据安全审计、财务审计等场景
+sections:
+- key: audit_scope
+  title: 审计范围与方法
+  required: true
+  description: 审计对象、审计期间、审计标准、审计方法
+  source: generated
+  suggested_length: short
+- key: findings
+  title: 审计发现
+  required: true
+  description: 不符合项、潜在风险、流程缺陷的详细描述
+  source: generated
+  suggested_length: long
+- key: severity_assessment
+  title: 问题等级评估
+  required: true
+  description: 按严重程度（重大/重要/一般）分类汇总
+  source: generated
+  suggested_length: medium
+- key: root_cause
+  title: 根因分析
+  required: false
+  description: 关键问题的根本原因分析
+  source: generated
+  suggested_length: medium
+- key: corrective_actions
+  title: 整改措施
+  required: true
+  description: 针对性的整改方案、责任部门、完成期限
+  source: generated
+  suggested_length: long
+- key: follow_up
+  title: 后续跟踪
+  required: true
+  description: 整改验证计划、跟踪机制、下一次审计时间
+  source: generated
+  suggested_length: short
+system_prompt: 你是一个专业审计师。严格依据审计标准和证据，客观呈现审计发现。整改建议要具体、可执行、有期限。
+suggested_charts:
+- bar
+- pie
+- table

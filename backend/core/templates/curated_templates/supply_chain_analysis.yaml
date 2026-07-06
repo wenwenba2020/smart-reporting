@@ -1,0 +1,49 @@
+template_id: curated_supply_chain_analysis
+name: 供应链分析报告
+category: 分析类
+parent_meta: meta_analysis
+description: 适用于供应链效率分析、采购分析、库存优化、物流成本分析等场景
+sections:
+- key: overview
+  title: 分析概述
+  required: true
+  description: 分析范围、供应链环节、关键指标
+  source: generated
+  suggested_length: short
+- key: procurement_analysis
+  title: 采购分析
+  required: false
+  description: 采购成本、供应商绩效、采购周期分析
+  source: generated
+  suggested_length: medium
+- key: inventory_analysis
+  title: 库存分析
+  required: true
+  description: 库存周转率、库存结构、呆滞库存分析
+  source: generated
+  suggested_length: medium
+- key: logistics_analysis
+  title: 物流分析
+  required: false
+  description: 配送时效、物流成本、配送准确率
+  source: generated
+  suggested_length: medium
+- key: efficiency_metrics
+  title: 效率指标
+  required: true
+  description: 端到端交付周期、准时交付率、供应链总成本
+  source: generated
+  suggested_length: medium
+- key: optimization_plan
+  title: 优化方案
+  required: true
+  description: 供应链瓶颈识别、优化建议、预期收益
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个供应链分析专家。从采购、库存、物流等环节全面分析供应链效率，识别瓶颈并给出优化建议。
+suggested_charts:
+- bar
+- line
+- scatter
+- flow
+- table

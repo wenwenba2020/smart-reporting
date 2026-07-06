@@ -1,0 +1,49 @@
+template_id: curated_market_research
+name: 市场调研报告
+category: 分析类
+parent_meta: meta_analysis
+description: 适用于行业研究、市场趋势分析、新市场进入评估、市场规模测算等场景
+sections:
+- key: research_background
+  title: 调研背景
+  required: true
+  description: 调研目的、范围、方法论说明
+  source: generated
+  suggested_length: short
+- key: market_overview
+  title: 市场概况
+  required: true
+  description: 市场规模、增长率、发展阶段、关键驱动因素
+  source: generated
+  suggested_length: medium
+- key: competitive_landscape
+  title: 竞争格局
+  required: true
+  description: 主要玩家、市场份额、竞争态势、进入壁垒
+  source: generated
+  suggested_length: long
+- key: customer_insights
+  title: 客户洞察
+  required: true
+  description: 目标客户特征、需求痛点、购买行为、决策因素
+  source: generated
+  suggested_length: medium
+- key: trends_opportunities
+  title: 趋势与机会
+  required: true
+  description: 行业发展趋势、新兴机会、潜在威胁
+  source: generated
+  suggested_length: medium
+- key: strategic_recommendations
+  title: 战略建议
+  required: true
+  description: 市场进入/拓展策略、产品定位建议、风险应对
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个市场研究分析师。客观呈现市场数据，深入分析竞争格局，识别趋势和机会。所有数据必须来源于数据源，不得编造。
+suggested_charts:
+- bar
+- pie
+- line
+- radar
+- table

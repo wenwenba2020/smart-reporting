@@ -1,0 +1,42 @@
+template_id: curated_department_kpi
+name: 部门KPI报告
+category: 指标类
+parent_meta: meta_indicator
+description: 适用于部门级KPI考核、OKR复盘、部门绩效评估等场景
+sections:
+- key: kpi_overview
+  title: KPI概览
+  required: true
+  description: 部门核心KPI指标仪表盘，达成率总览
+  source: generated
+  suggested_length: short
+- key: metric_detail
+  title: 指标详细分析
+  required: true
+  description: 逐个KPI指标分析：目标值、实际值、达成率、同比环比
+  source: generated
+  suggested_length: long
+- key: gap_analysis
+  title: 差距分析
+  required: true
+  description: 未达标指标的原因分析和影响评估
+  source: generated
+  suggested_length: medium
+- key: team_performance
+  title: 团队/个人绩效
+  required: false
+  description: 团队成员绩效分布、关键贡献者
+  source: generated
+  suggested_length: medium
+- key: improvement_actions
+  title: 改善行动计划
+  required: true
+  description: 针对差距的具体改善措施、责任人和时间节点
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个绩效管理专家。基于KPI数据客观评估部门绩效，分析差距原因，制定可执行的改善计划。所有数据必须来源于数据源。
+suggested_charts:
+- gauge
+- bar
+- radar
+- table

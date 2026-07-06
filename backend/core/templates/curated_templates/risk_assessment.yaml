@@ -1,0 +1,49 @@
+template_id: curated_risk_assessment
+name: 风险评估报告
+category: 评估类
+parent_meta: meta_evaluation
+description: 适用于项目风险评估、业务风险排查、合规风险审计、安全风险评估等场景
+sections:
+- key: assessment_scope
+  title: 评估范围与方法
+  required: true
+  description: 评估对象、风险维度、评估方法、数据来源
+  source: generated
+  suggested_length: short
+- key: risk_inventory
+  title: 风险清单
+  required: true
+  description: 识别出的所有风险项，按类别和严重程度排序
+  source: generated
+  suggested_length: long
+- key: risk_analysis
+  title: 风险分析
+  required: true
+  description: 各风险的发生概率、影响程度、风险等级评估矩阵
+  source: generated
+  suggested_length: long
+- key: existing_controls
+  title: 现有控制措施
+  required: false
+  description: 已有的风险控制措施和有效性评估
+  source: generated
+  suggested_length: medium
+- key: mitigation_plan
+  title: 风险应对方案
+  required: true
+  description: 针对高中风险的具体应对措施、责任人和时间表
+  source: generated
+  suggested_length: medium
+- key: monitoring_mechanism
+  title: 监控机制
+  required: false
+  description: 风险持续监测指标、预警阈值、报告机制
+  source: generated
+  suggested_length: short
+system_prompt: 你是一个风险管理专家。系统性地识别、分析和评估风险，制定切实可行的应对方案。客观冷静，既不夸大也不淡化风险。
+suggested_charts:
+- heatmap
+- matrix
+- bar
+- radar
+- table

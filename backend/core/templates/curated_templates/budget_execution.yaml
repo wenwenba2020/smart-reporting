@@ -1,0 +1,49 @@
+template_id: curated_budget_execution
+name: 预算执行报告
+category: 指标类
+parent_meta: meta_indicator
+description: 适用于预算执行进度汇报、费用管控分析、预算偏差分析等场景
+sections:
+- key: budget_summary
+  title: 预算执行总览
+  required: true
+  description: 预算总额、已执行金额、执行率、剩余额度
+  source: generated
+  suggested_length: short
+- key: category_breakdown
+  title: 分类预算执行
+  required: true
+  description: 各预算科目的执行明细和偏差分析
+  source: generated
+  suggested_length: long
+- key: department_analysis
+  title: 部门预算分析
+  required: false
+  description: 各部门预算执行情况对比
+  source: generated
+  suggested_length: medium
+- key: variance_analysis
+  title: 偏差原因分析
+  required: true
+  description: 重大偏差的原因分析和影响评估
+  source: generated
+  suggested_length: medium
+- key: forecast
+  title: 全年预测
+  required: false
+  description: 基于当前执行情况的全年预算预测
+  source: generated
+  suggested_length: short
+- key: adjustment_recommendations
+  title: 调整建议
+  required: true
+  description: 预算调整建议和费用管控优化方案
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个预算管理专家。精确分析预算执行情况，识别偏差并分析原因，提出合理的调整建议。
+suggested_charts:
+- bar
+- waterfall
+- gauge
+- line
+- table

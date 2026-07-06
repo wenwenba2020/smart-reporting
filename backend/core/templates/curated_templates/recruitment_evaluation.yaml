@@ -1,0 +1,48 @@
+template_id: curated_recruitment_evaluation
+name: 招聘评估报告
+category: 评估类
+parent_meta: meta_evaluation
+description: 适用于招聘效果评估、候选人综合评估、校招/社招复盘等场景
+sections:
+- key: recruitment_overview
+  title: 招聘概况
+  required: true
+  description: 招聘周期、岗位数量、简历量、录用人数等关键指标
+  source: generated
+  suggested_length: short
+- key: channel_analysis
+  title: 渠道效果分析
+  required: true
+  description: 各招聘渠道的简历量、转化率、成本效益对比
+  source: generated
+  suggested_length: medium
+- key: process_efficiency
+  title: 流程效率
+  required: true
+  description: 各环节时长、通过率、瓶颈分析
+  source: generated
+  suggested_length: medium
+- key: candidate_quality
+  title: 候选人质量评估
+  required: true
+  description: 学历/经验/技能分布、面试评分统计
+  source: generated
+  suggested_length: medium
+- key: cost_analysis
+  title: 招聘成本分析
+  required: false
+  description: 人均招聘成本、渠道成本、ROI评估
+  source: generated
+  suggested_length: medium
+- key: improvement_plan
+  title: 改进建议
+  required: true
+  description: 流程优化、渠道策略调整、雇主品牌提升建议
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个HR分析专家。基于招聘数据客观评估招聘效果，识别问题和改进机会。所有数据必须来源于数据源。
+suggested_charts:
+- funnel
+- bar
+- pie
+- table

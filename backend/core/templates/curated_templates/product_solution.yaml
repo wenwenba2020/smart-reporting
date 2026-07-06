@@ -1,0 +1,60 @@
+template_id: curated_product_solution
+name: 产品行业解决方案
+category: 分析类
+parent_meta: meta_analysis
+description: 适用于面向客户的产品解决方案提案、行业解决方案白皮书、售前方案等场景
+sections:
+- key: executive_summary
+  title: 方案摘要
+  required: true
+  description: 方案核心价值和关键亮点概述
+  source: generated
+  suggested_length: short
+- key: client_profile
+  title: 客户概况与需求
+  required: true
+  description: 客户基本情况、业务痛点、核心诉求
+  source: generated
+  suggested_length: medium
+- key: industry_background
+  title: 行业背景
+  required: false
+  description: 行业现状、政策环境、发展趋势
+  source: generated
+  suggested_length: medium
+- key: solution_overview
+  title: 解决方案
+  required: true
+  description: 产品/服务方案详细介绍、技术架构、实施路径
+  source: generated
+  suggested_length: long
+- key: value_proposition
+  title: 价值主张
+  required: true
+  description: 为客户带来的具体价值、ROI测算、竞争优势
+  source: generated
+  suggested_length: medium
+- key: case_studies
+  title: 案例参考
+  required: false
+  description: 类似客户案例、实施效果
+  source: enterprise_ppt
+  match_keywords:
+  - 案例
+  - 客户
+  - 项目成果
+  - 成功案例
+  max_matches: 3
+  fallback: generated
+- key: implementation_plan
+  title: 实施计划
+  required: false
+  description: 项目周期、里程碑、资源需求、风险预案
+  source: generated
+  suggested_length: medium
+system_prompt: 你是一个解决方案架构师。从客户需求出发，设计针对性的产品解决方案。突出差异化价值，用数据和案例支撑论证。
+suggested_charts:
+- bar
+- flow
+- table
+- comparison

@@ -1,0 +1,48 @@
+template_id: curated_daily_sales_report
+name: 销售日报
+category: 进度类
+parent_meta: meta_progress
+description: 适用于每日销售业绩快报、销售团队日报、门店/区域日销售汇报等场景
+sections:
+- key: daily_summary
+  title: 今日综述
+  required: true
+  description: 今日销售总体情况和关键亮点
+  source: generated
+  suggested_length: short
+- key: sales_metrics
+  title: 销售指标
+  required: true
+  description: 今日销售额、订单量、客单价、转化率等核心指标
+  source: generated
+  suggested_length: medium
+- key: channel_breakdown
+  title: 渠道/区域分布
+  required: false
+  description: 各渠道/区域的销售分布和对比
+  source: generated
+  suggested_length: medium
+- key: top_performers
+  title: 销售亮点
+  required: false
+  description: Top销售员/门店/产品，大单记录
+  source: generated
+  suggested_length: short
+- key: issues_alerts
+  title: 异常与预警
+  required: true
+  description: 数据异常、客户投诉、库存风险等需要关注的问题
+  source: generated
+  suggested_length: medium
+- key: tomorrow_plan
+  title: 明日计划
+  required: true
+  description: 明日销售目标和重点工作安排
+  source: generated
+  suggested_length: short
+system_prompt: 你是一个销售数据分析师。快速提炼当日销售数据的关键信息，突出异常和亮点，数据要准确。
+suggested_charts:
+- bar
+- line
+- table
+- gauge
