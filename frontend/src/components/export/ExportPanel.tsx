@@ -6,11 +6,12 @@ import { useConfirmDialog } from '../ui/ConfirmDialog';
 
 const EXPORT_FORMATS = [
   { key: 'pptx', label: 'PPTX', icon: FileText },
-  { key: 'docx', label: 'DOCX', icon: FileText },
+  { key: 'docx', label: 'Word', icon: FileText },
   { key: 'pdf', label: 'PDF', icon: FileText },
+  { key: 'html_mindmap', label: '脑图', icon: FileText },
 ] as const;
 
-export function ExportPanel() {
+export function ExportPanel({ selectedTemplateId }: { selectedTemplateId?: string }) {
   const [exportingFormats, setExportingFormats] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
 

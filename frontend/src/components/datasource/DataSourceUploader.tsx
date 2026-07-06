@@ -1,10 +1,17 @@
 import { useState, useRef, useCallback } from 'react';
-import { Upload, FileText, X, Sparkles, Loader2, ChevronDown } from 'lucide-react';
+import { Upload, FileText, X, Sparkles, Loader2, ChevronDown, Globe, Database, Brain, Wifi } from 'lucide-react';
 import { useReportWorkflowStore } from '../../stores/reportWorkflowStore';
 import { reportApi, createReportSSE } from '../../api/reportClient';
 import { Spinner } from '../ui/Spinner';
 import { Badge } from '../ui/Badge';
 import type { SSEEvent, ReportSection } from '../../types';
+
+const ADVANCED_SOURCES = [
+  { key: 'rest_api', label: 'REST API', icon: Globe, desc: '通过 HTTP 接口拉取数据' },
+  { key: 'mcp', label: 'MCP 工具', icon: Wifi, desc: '通过喔壳 MCP 调用企业系统' },
+  { key: 'database', label: '数据库直连', icon: Database, desc: 'SQL 查询数据库' },
+  { key: 'knowledge_base', label: 'RAG 知识库', icon: Brain, desc: '语义搜索企业知识库' },
+] as const;
 
 export function DataSourceUploader() {
   const [dragOver, setDragOver] = useState(false);
@@ -13,6 +20,10 @@ export function DataSourceUploader() {
   const [templates, setTemplates] = useState<Array<{ template_id: string; name: string; category: string }>>([]);
   const [templatesLoading, setTemplatesLoading] = useState(false);
   const [showTemplatePicker, setShowTemplatePicker] = useState(false);
+  const [showAdvancedSources, setShowAdvancedSources] = useState(false);
+  const [advancedSourceType, setAdvancedSourceType] = useState<string>('rest_api');
+  const [advancedConfig, setAdvancedConfig] = useState<Record<string, string>>({});
+  const [advancedFetching, setAdvancedFetching] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -165,6 +176,69 @@ export function DataSourceUploader() {
     );
   };
 
+  // ── Advanced data source fetch ──────────────────────────────
+  const handleAdvancedFetch = async () => {
+    setAdvancedFetching(true);
+    setUploadError(null);
+    try {
+      const sourceType = advancedSourceType;
+      let config: Record<string, unknown> = {};
+
+      if (sourceType === 'rest_api') {
+        config = {
+          url: advancedConfig['url'] || '',
+          method: advancedConfig['method'] || 'GET',
+          auth_type: advancedConfig['auth_type'] || 'none',
+          auth_token: advancedConfig['auth_token'] || '',
+          jsonpath_expr: advancedConfig['jsonpath'] || '$',
+          title_field: advancedConfig['title_field'] || '',
+        };
+      } else if (sourceType === 'mcp') {
+        config = {
+          robot_id: parseInt(advancedConfig['robot_id'] || '0'),
+          user_id: advancedConfig['user_id'] || 'default',
+          tool_prompt: advancedConfig['tool_prompt'] || '',
+        };
+      } else if (sourceType === 'database') {
+        config = {
+          connection_string: advancedConfig['connection_string'] || '',
+          query: advancedConfig['query'] || '',
+          db_type: advancedConfig['db_type'] || 'sqlite',
+        };
+      } else if (sourceType === 'knowledge_base') {
+        // RAG search: use the query field as search query
+        const searchQuery = advancedConfig['search_query'] || query;
+        const res = await fetch('/api/v1/datasources/rag/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: searchQuery, top_k: 5 }),
+        });
+        const data = await res.json();
+        if (data.source_id) {
+          addSource({ source_id: data.source_id, title: data.title, source_type: 'knowledge_base' });
+        }
+        setAdvancedFetching(false);
+        return;
+      }
+
+      const res = await fetch('/api/v1/datasources/fetch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ source_type: sourceType, config }),
+      });
+      const data = await res.json();
+      if (data.source_id) {
+        addSource({ source_id: data.source_id, title: data.title, source_type: sourceType });
+      } else {
+        setUploadError(data.msg || '获取失败');
+      }
+    } catch (e) {
+      setUploadError(e instanceof Error ? e.message : '获取数据源失败');
+    } finally {
+      setAdvancedFetching(false);
+    }
+  };
+
   // ── Drag-and-drop handlers ──────────────────────────────────
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -261,6 +335,95 @@ export function DataSourceUploader() {
           </div>
         </div>
       )}
+
+      {/* ── Advanced Data Sources ──────────────────────────── */}
+      <div className="mb-6">
+        <button
+          onClick={() => setShowAdvancedSources(!showAdvancedSources)}
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedSources ? 'rotate-180' : ''}`} />
+          高级数据源 ({ADVANCED_SOURCES.length} 种)
+        </button>
+
+        {showAdvancedSources && (
+          <div className="mt-3 p-4 rounded-xl border border-border/30 bg-card space-y-3">
+            <div className="flex gap-2 flex-wrap">
+              {ADVANCED_SOURCES.map((src) => (
+                <button
+                  key={src.key}
+                  onClick={() => setAdvancedSourceType(src.key)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
+                    advancedSourceType === src.key
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-muted hover:bg-muted/70'
+                  }`}
+                >
+                  <src.icon className="w-3.5 h-3.5" />
+                  {src.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Config fields based on source type */}
+            <div className="space-y-2">
+              {advancedSourceType === 'rest_api' && (
+                <>
+                  <input className="w-full p-2 text-xs border rounded" placeholder="URL (https://api.example.com/data)"
+                    value={advancedConfig['url'] || ''} onChange={e => setAdvancedConfig(p => ({...p, url: e.target.value}))} />
+                  <div className="flex gap-2">
+                    <select className="p-2 text-xs border rounded" value={advancedConfig['method'] || 'GET'}
+                      onChange={e => setAdvancedConfig(p => ({...p, method: e.target.value}))}>
+                      <option>GET</option><option>POST</option>
+                    </select>
+                    <select className="p-2 text-xs border rounded" value={advancedConfig['auth_type'] || 'none'}
+                      onChange={e => setAdvancedConfig(p => ({...p, auth_type: e.target.value}))}>
+                      <option value="none">无认证</option><option value="bearer">Bearer Token</option><option value="basic">Basic Auth</option>
+                    </select>
+                  </div>
+                  {advancedConfig['auth_type'] === 'bearer' && (
+                    <input className="w-full p-2 text-xs border rounded" placeholder="Token"
+                      value={advancedConfig['auth_token'] || ''} onChange={e => setAdvancedConfig(p => ({...p, auth_token: e.target.value}))} />
+                  )}
+                  <input className="w-full p-2 text-xs border rounded" placeholder="JSONPath (默认 $)"
+                    value={advancedConfig['jsonpath'] || ''} onChange={e => setAdvancedConfig(p => ({...p, jsonpath: e.target.value}))} />
+                </>
+              )}
+              {advancedSourceType === 'mcp' && (
+                <>
+                  <input className="w-full p-2 text-xs border rounded" placeholder="Robot ID (数字员工ID)"
+                    value={advancedConfig['robot_id'] || ''} onChange={e => setAdvancedConfig(p => ({...p, robot_id: e.target.value}))} />
+                  <input className="w-full p-2 text-xs border rounded" placeholder="触发提示词"
+                    value={advancedConfig['tool_prompt'] || ''} onChange={e => setAdvancedConfig(p => ({...p, tool_prompt: e.target.value}))} />
+                </>
+              )}
+              {advancedSourceType === 'database' && (
+                <>
+                  <input className="w-full p-2 text-xs border rounded" placeholder="连接串 (sqlite:///data/test.db)"
+                    value={advancedConfig['connection_string'] || ''} onChange={e => setAdvancedConfig(p => ({...p, connection_string: e.target.value}))} />
+                  <textarea className="w-full p-2 text-xs border rounded" rows={3} placeholder="SELECT * FROM sales LIMIT 100"
+                    value={advancedConfig['query'] || ''} onChange={e => setAdvancedConfig(p => ({...p, query: e.target.value}))} />
+                </>
+              )}
+              {advancedSourceType === 'knowledge_base' && (
+                <>
+                  <input className="w-full p-2 text-xs border rounded" placeholder="搜索关键词"
+                    value={advancedConfig['search_query'] || ''} onChange={e => setAdvancedConfig(p => ({...p, search_query: e.target.value}))} />
+                  <p className="text-xs text-muted-foreground">从已索引的文档中语义检索相关内容。需先通过 RAG ingest 导入文档。</p>
+                </>
+              )}
+              <button
+                onClick={handleAdvancedFetch}
+                disabled={advancedFetching}
+                className="flex items-center gap-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium disabled:opacity-50"
+              >
+                {advancedFetching ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
+                {advancedFetching ? '获取中...' : '获取数据'}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* ── Query Input ─────────────────────────────────────── */}
       <div className="mb-6">
