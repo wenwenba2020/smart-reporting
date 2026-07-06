@@ -2,6 +2,7 @@ from backend.core.output.base import BaseExporter
 from backend.core.output.docx_exporter import DocxExporter
 from backend.core.output.pdf_exporter import PdfExporter
 from backend.core.output.mindmap_exporter import MindmapExporter
+from backend.core.output.pptx_exporter import PptxExporter
 from backend.core.models import ExportResult, StructuredReport
 
 
@@ -13,6 +14,7 @@ class ReportOutputEngine:
             "docx": DocxExporter(),
             "pdf": PdfExporter(),
             "html_mindmap": MindmapExporter(),
+            "pptx": PptxExporter(),
         }
 
     async def export(

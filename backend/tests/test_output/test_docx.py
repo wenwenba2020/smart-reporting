@@ -144,7 +144,7 @@ async def test_get_formats():
     assert "docx" in formats
     assert "pdf" in formats
     assert "html_mindmap" in formats
-    assert len(formats) == 3
+    assert len(formats) >= 4  # docx, pdf, html_mindmap, pptx
 
 
 @pytest.mark.asyncio
