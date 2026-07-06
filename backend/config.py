@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     upload_max_size_mb: int = 50
     workopilot_base_url: str = "https://agent.workopilot.com/net-api"
     workopilot_api_key: str = ""
+    server_port: int = 8080
     jwt_secret: str = ""
     jwt_expire_days: int = 7
     redis_url: str = "redis://localhost:6379/0"

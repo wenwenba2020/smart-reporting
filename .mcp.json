@@ -4,15 +4,20 @@
       "command": "npx",
       "args": ["-y", "tavily-mcp"],
       "env": {
-        "TAVILY_API_KEY": "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"
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
       }
     },
     "exa": {
       "command": "npx",
       "args": ["-y", "exa-mcp"],
       "env": {
-        "EXA_API_KEY": "530e22be-ba2d-42f0-8974-63379865d83e"
+        "EXA_API_KEY": "${EXA_API_KEY}"
       }
+    },
+    "smart-reporting": {
+      "command": ".venv/bin/python",
+      "args": ["backend/mcp_server.py"],
+      "cwd": "/home/wenwenba2020/cc_workspace/smart_reporting"
     }
   }
 }
