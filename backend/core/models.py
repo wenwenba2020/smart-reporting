@@ -221,3 +221,28 @@ class ExportResult:
     file_size_bytes: int = 0
     download_url: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
+
+
+# ---------- configurable data-source layer (Phase 2A) ----------
+
+@dataclass
+class RestApiSourceConfig:
+    """Configuration for a REST API data source."""
+    url: str
+    method: str = "GET"
+    headers: dict[str, str] = field(default_factory=dict)
+    auth_type: str = "none"                    # "none" | "bearer" | "basic"
+    auth_token: str = ""
+    auth_username: str = ""
+    auth_password: str = ""
+    jsonpath_expr: str = "$"                   # JSONPath expression to extract data
+    title_field: str = ""                      # response field to use as document title
+
+
+@dataclass
+class McpSourceConfig:
+    """Configuration for an MCP (Model Context Protocol) data source via WorkoPilot."""
+    robot_id: int                              # WorkoPilot digital employee ID (with MCP tools configured)
+    user_id: str                               # end-user identifier
+    tool_prompt: str                           # natural-language prompt that triggers the MCP tool
+    session_id: str = ""                       # optional: reuse an existing chat session
