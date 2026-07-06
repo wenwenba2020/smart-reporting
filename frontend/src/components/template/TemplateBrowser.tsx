@@ -16,12 +16,21 @@ export function TemplateBrowser() {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     reportApi.listTemplates().then(templates => {
-      setTemplates(templates);
-      setFiltered(templates);
+      if (Array.isArray(templates)) {
+        setTemplates(templates);
+        setFiltered(templates);
+      } else {
+        setError(`数据格式异常: ${typeof templates} — ${JSON.stringify(templates).slice(0, 100)}`);
+      }
       setLoading(false);
-    }).catch(() => setLoading(false));
+    }).catch((e) => {
+      setError(e instanceof Error ? e.message : String(e));
+      setLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -68,8 +77,16 @@ export function TemplateBrowser() {
       </div>
 
       {/* Template grid */}
+      {error && (
+        <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-sm mb-4">
+          <p className="font-medium">加载失败</p>
+          <p className="text-xs mt-1 font-mono">{error}</p>
+        </div>
+      )}
       {loading ? (
         <div className="text-sm text-muted-foreground text-center py-12">加载中...</div>
+      ) : error ? (
+        <div className="text-sm text-muted-foreground text-center py-12">加载失败，请刷新重试</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map(t => (
