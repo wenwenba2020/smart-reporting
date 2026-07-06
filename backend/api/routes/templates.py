@@ -15,6 +15,8 @@ async def list_templates(category: str = Query(default="")):
         templates = template_store.list_all()
 
     return {
+        "code": 200,
+        "msg": "ok",
         "data": [
             {
                 "template_id": t.template_id,
@@ -26,7 +28,7 @@ async def list_templates(category: str = Query(default="")):
                 "suggested_charts": t.suggested_charts,
             }
             for t in templates
-        ]
+        ],
     }
 
 

@@ -74,6 +74,8 @@ async def upload_source(
 async def list_sources():
     """List all uploaded sources (summary only)."""
     return {
+        "code": 200,
+        "msg": "ok",
         "data": [
             {
                 "id": doc.id,

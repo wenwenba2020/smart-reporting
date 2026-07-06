@@ -121,7 +121,7 @@ class TestCompleteUserWorkflow:
     def test_03_list_templates(self, client):
         """Verify 24 templates are available."""
         r = client.get(f"{BASE}/templates/")
-        templates = _j(r)["data"]
+        templates = _j(r)  # _j unwraps {code,data} -> data array
         assert len(templates) >= 20, f"Expected >=20 templates, got {len(templates)}"
         categories = set(t["category"] for t in templates)
         assert len(categories) >= 5, f"Expected >=5 categories, got {len(categories)}"
@@ -130,8 +130,7 @@ class TestCompleteUserWorkflow:
     def test_04_list_datasources(self, client, uploaded_sources):
         """Verify uploaded sources appear in the list."""
         r = client.get(f"{BASE}/datasources/")
-        data = _j(r)
-        sources = data.get("data", [])
+        sources = _j(r)  # _j unwraps {code,data} -> data array
         source_ids = {s["id"] for s in sources}
         for sid in uploaded_sources:
             assert sid in source_ids, f"Source {sid} not found in list"
@@ -296,7 +295,7 @@ class TestCompleteUserWorkflow:
         """Test data source CRUD via the management API."""
         # List
         r = client.get(f"{BASE}/datasources/")
-        sources = _j(r).get("data", [])
+        sources = _j(r)
         assert len(sources) >= len(uploaded_sources)
 
         # Delete a source
