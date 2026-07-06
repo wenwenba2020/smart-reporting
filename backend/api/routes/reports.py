@@ -141,9 +141,13 @@ async def generate_report(body: GenerateRequest):
         summarized = await summarizer.summarize(source_docs)
         yield _sse_event("progress", {"phase": "summarize", "message": "数据源汇总完成", "done": True})
 
-        # Phase 2: Fill sections one by one
+        # Phase 2: Fill sections one by one (streaming preview + accumulate for final report)
         filler = SectionFiller()
         leaf_sections = filler._collect_leaf_sections(template.sections)
+        source_text = "\n\n---\n\n".join(
+            f"### [{d.source_type}] {d.title}\n{d.content}" for d in source_docs
+        )
+        filled_sections = []  # accumulate during Phase 2, reuse in Phase 3
 
         for i, section in enumerate(leaf_sections):
             yield _sse_event("progress", {
@@ -153,11 +157,8 @@ async def generate_report(body: GenerateRequest):
                 "total": len(leaf_sections),
             })
 
-            # Fill this section
-            source_text = "\n\n---\n\n".join(
-                f"### [{d.source_type}] {d.title}\n{d.content}" for d in source_docs
-            )
             filled = await filler._fill_section(section, template, source_text)
+            filled_sections.append(filled)  # store for later reuse
             yield _sse_event("section", {
                 "key": section.key,
                 "title": section.title,
@@ -165,15 +166,7 @@ async def generate_report(body: GenerateRequest):
                 "index": i + 1,
             })
 
-        # Phase 3: Build full report
-        filled_sections = []
-        for section in leaf_sections:
-            source_text = "\n\n---\n\n".join(
-                f"### [{d.source_type}] {d.title}\n{d.content}" for d in source_docs
-            )
-            filled = await filler._fill_section(section, template, source_text)
-            filled_sections.append(filled)
-
+        # Phase 3: Build full report from previously filled sections (no double LLM call)
         full_md_parts = [f"# {template.name}"]
         for rs in filled_sections:
             full_md_parts.append(f"\n## {rs.section_def.title}\n{rs.markdown_content}")

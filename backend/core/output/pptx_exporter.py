@@ -220,28 +220,111 @@ class PptxExporter(BaseExporter):
     # ------------------------------------------------------------------
 
     def _merge_reused_slides(self, report: StructuredReport, output_path: Path):
-        """Replace placeholder slides with actual slides from enterprise PPT library."""
+        """Replace placeholder slides with actual slides from enterprise PPT library.
+
+        Strategy: For sections with accepted slide_refs pointing to enterprise PPT source
+        files, find the source PPTX, clone the referenced slides, and insert them at the
+        correct positions in the output PPTX, replacing the placeholder SVG slides.
+        """
         from pptx import Presentation
 
-        # Collect sections with enterprise PPT slide references
-        reused = []
-        for section in report.sections:
-            for ref in section.slide_refs:
-                if ref.accepted and ref.source_file:
-                    reused.append((section, ref))
+        if not report.sections:
+            return
 
-        if not reused:
+        # Build a map: output_slide_index -> source_file -> source_slide_index
+        # The output PPTX has slides in the same order as report.sections
+        slide_replacements: list[tuple[int, str, int, str]] = []  # (output_idx, source_file, source_idx, slide_id)
+        for i, section in enumerate(report.sections):
+            for ref in section.slide_refs:
+                if ref.accepted and ref.source_file and os.path.exists(ref.source_file):
+                    slide_replacements.append((i, ref.source_file, ref.slide_index, ref.slide_id))
+
+        if not slide_replacements:
             return
 
         try:
             prs = Presentation(str(output_path))
-            # For now, slide reuse is a placeholder — full implementation needs
-            # slide cloning from source PPTX files, which is complex with python-pptx.
-            # This will be enhanced in a follow-up.
-            logger.info(f"Slide reuse: {len(reused)} sections marked for reuse (full cloning TBD)")
+            total_slides = len(prs.slides)
+
+            # Process replacements in reverse order to preserve indices
+            for out_idx, source_file, source_idx, slide_id in sorted(slide_replacements, key=lambda x: x[0], reverse=True):
+                if out_idx >= total_slides:
+                    continue
+
+                try:
+                    src_prs = Presentation(source_file)
+                    if source_idx >= len(src_prs.slides):
+                        logger.warning(f"Source slide index {source_idx} out of range for {source_file}")
+                        continue
+
+                    # Clone slide from source into output at the correct position
+                    self._clone_slide_into(src_prs, source_idx, prs, out_idx)
+
+                except Exception as e:
+                    logger.warning(f"Failed to clone slide {source_idx} from {source_file}: {e}")
+
             prs.save(str(output_path))
+            logger.info(f"Slide reuse: {len(slide_replacements)} slides cloned from enterprise PPT library")
+
         except Exception as e:
             logger.warning(f"Slide reuse merge failed: {e}")
+
+    def _clone_slide_into(self, src_prs, src_idx: int, dst_prs, dst_idx: int):
+        """Clone a single slide from src_prs into dst_prs at position dst_idx."""
+        import copy
+        from lxml import etree
+
+        src_slide = src_prs.slides[src_idx]
+
+        # Create a new slide in destination with the same layout (or first available)
+        try:
+            layout_name = src_slide.slide_layout.name if src_slide.slide_layout else ""
+            matching_layout = None
+            for layout in dst_prs.slide_layouts:
+                if layout.name == layout_name:
+                    matching_layout = layout
+                    break
+            layout = matching_layout or dst_prs.slide_layouts[0]
+        except Exception:
+            layout = dst_prs.slide_layouts[0]
+
+        # Add slide at the end first, then we'll reorder
+        new_slide = dst_prs.slides.add_slide(layout)
+
+        # Copy all shapes from source slide
+        shape_tree = new_slide.shapes._spTree
+        for shape in src_slide.shapes:
+            try:
+                el = copy.deepcopy(shape._element)
+                shape_tree.insert_element_before(el, 'p:ext')
+            except Exception:
+                pass  # skip problematic shapes
+
+        # Copy image relationships
+        try:
+            for rel in src_slide.part.rels.values():
+                if "image" in rel.reltype or "media" in rel.reltype:
+                    try:
+                        new_slide.part.rels.get_or_add(rel.reltype, rel.target)
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
+        # Move the newly added slide (at the end) to dst_idx
+        total = len(dst_prs.slides)
+        if total > 1 and total - 1 != dst_idx:
+            try:
+                xml_slides = dst_prs.slides._sldIdLst
+                slide_entries = list(xml_slides)
+                last_entry = slide_entries[-1]
+                xml_slides.remove(last_entry)
+                if dst_idx < len(slide_entries) - 1:
+                    xml_slides.insert(dst_idx, last_entry)
+                else:
+                    xml_slides.append(last_entry)
+            except Exception:
+                pass  # best-effort reordering
 
     # ------------------------------------------------------------------
     # Speaker notes

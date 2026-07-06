@@ -14,11 +14,11 @@ class Settings(BaseSettings):
     upload_max_size_mb: int = 50
     workopilot_base_url: str = "https://agent.workopilot.com/net-api"
     workopilot_api_key: str = ""
-    jwt_secret: str = "change-me-in-production"
+    jwt_secret: str = ""
     jwt_expire_days: int = 7
     redis_url: str = "redis://localhost:6379/0"
     testing: bool = False
-    cors_origins: list[str] = ["http://localhost:5173"]
+    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3001"]
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 

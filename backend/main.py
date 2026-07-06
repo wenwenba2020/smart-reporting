@@ -23,6 +23,19 @@ async def lifespan(app: FastAPI):
     Path("data/files").mkdir(parents=True, exist_ok=True)
     Path(settings.local_storage_path).mkdir(parents=True, exist_ok=True)
     await init_db()
+
+    # Security: warn about default secrets
+    if not settings.jwt_secret:
+        import secrets
+        logger.warning("JWT_SECRET is empty — auto-generating a random key for this session. "
+                       "Set JWT_SECRET in .env for production use.")
+        settings.jwt_secret = secrets.token_hex(32)
+    elif settings.jwt_secret == "change-me-in-production":
+        logger.critical("JWT_SECRET is the default placeholder 'change-me-in-production'! "
+                        "Set a secure random value in .env immediately.")
+    if not settings.openrouter_api_key or "placeholder" in settings.openrouter_api_key:
+        logger.warning("OPENROUTER_API_KEY is not configured — LLM features will use fallback mode")
+
     logger.info("Smart Reporting API started — database and storage ready")
     yield
     # Shutdown
