@@ -71,6 +71,22 @@ export const reportApi = {
     return request<ReportTemplate[]>(`/templates${qs ? '?' + qs : ''}`);
   },
 
+  getTemplate: (id: string) =>
+    request<{
+      template_id: string; name: string; category: string; description: string;
+      system_prompt: string; is_custom: boolean;
+      sections: Array<{key:string; title:string; required:boolean; description:string; source:string; suggested_length:string}>;
+    }>(`/templates/${id}`),
+
+  createTemplate: (data: Record<string, unknown>) =>
+    request<{ template_id: string }>('/templates', { method: 'POST', body: JSON.stringify(data) }),
+
+  updateTemplate: (id: string, data: Record<string, unknown>) =>
+    request<{ template_id: string }>(`/templates/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+
+  deleteTemplate: (id: string) =>
+    request<{ template_id: string }>(`/templates/${id}`, { method: 'DELETE' }),
+
   // ── Reports: Intent ──────────────────────────────────────────
   recognizeIntent: (userQuery: string, sourceIds: string[]) =>
     request<IntentResponse>('/reports/intent', {

@@ -1,0 +1,12 @@
+template_id: custom_测试模板
+name: 测试模板
+category: 进度类
+description: ''
+sections:
+- key: s1
+  title: 章节一
+  required: true
+  source: generated
+  suggested_length: medium
+system_prompt: ''
+suggested_charts: []
