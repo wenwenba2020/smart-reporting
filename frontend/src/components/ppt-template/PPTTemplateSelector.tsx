@@ -18,8 +18,8 @@ export function PPTTemplateSelector({ selectedId, onSelect }: Props) {
 
   const loadTemplates = async () => {
     try {
-      const data = await reportApi.listPPTTemplates();
-      setTemplates(data.data || []);
+      const result = await reportApi.listPPTTemplates();
+      setTemplates((result as any).data || []);
     } catch (e) {
       console.error('Failed to load PPT templates:', e);
     } finally {

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type {
   ReportIntent,
+  ReportSection,
   TemplateRecommendation,
   StructuredReport,
 } from '../types';
@@ -49,6 +50,7 @@ interface ReportWorkflowState {
   report: StructuredReport | null;
   setReport: (report: StructuredReport) => void;
   updateSection: (key: string, content: string) => void;
+  addSection: (section: ReportSection) => void;
   activeSectionKey: string | null;
   setActiveSection: (key: string | null) => void;
   selectedText: string;
@@ -126,6 +128,11 @@ export const useReportWorkflowStore = create<ReportWorkflowState>((set, get) => 
         sec.key === key ? { ...sec, content } : sec
       );
       return { report: { ...s.report, sections } };
+    }),
+  addSection: (section) =>
+    set((s) => {
+      if (!s.report) return s;
+      return { report: { ...s.report, sections: [...s.report.sections, section] } };
     }),
   activeSectionKey: null,
   setActiveSection: (key) => set({ activeSectionKey: key }),

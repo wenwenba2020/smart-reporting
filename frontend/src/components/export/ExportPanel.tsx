@@ -11,7 +11,7 @@ const EXPORT_FORMATS = [
   { key: 'html_mindmap', label: '脑图', icon: FileText },
 ] as const;
 
-export function ExportPanel({ selectedTemplateId }: { selectedTemplateId?: string }) {
+export function ExportPanel({ selectedTemplateId: _selectedTemplateId }: { selectedTemplateId?: string }) {
   const [exportingFormats, setExportingFormats] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
 

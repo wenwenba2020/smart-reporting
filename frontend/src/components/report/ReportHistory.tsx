@@ -1,5 +1,4 @@
-import { Clock, FileText, ChevronRight } from 'lucide-react';
-import { Badge } from '../ui/Badge';
+import { Clock, FileText } from 'lucide-react';
 
 export function ReportHistory() {
   return (

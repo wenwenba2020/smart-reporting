@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Database, FileText, Trash2, X, RefreshCw } from 'lucide-react';
+import { Database, FileText, Trash2, RefreshCw } from 'lucide-react';
 import { reportApi } from '../../api/reportClient';
 import { Badge } from '../ui/Badge';
 
