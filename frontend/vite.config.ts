@@ -29,14 +29,17 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+        followRedirects: true,
       },
       '/health': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+        followRedirects: true,
       },
       '/files': {
         target: 'http://localhost:8080',
         changeOrigin: true,
+        followRedirects: true,
       },
     },
   },

@@ -60,15 +60,15 @@ export const reportApi = {
         source_type: string;
         metadata: Record<string, unknown>;
       }>;
-    }>('/datasources/'),
+    }>('/datasources'),
 
   deleteDatasource: (id: string) =>
     request<{ deleted: string }>(`/datasources/${id}`, { method: 'DELETE' }),
 
   // ── Templates ────────────────────────────────────────────────
   listTemplates: (category?: string) => {
-    const qs = category ? `?category=${category}` : '';
-    return request<ReportTemplate[]>(`/templates/${qs}`);
+    const qs = category ? `?category=${encodeURIComponent(category)}` : '';
+    return request<ReportTemplate[]>(`/templates${qs ? '?' + qs : ''}`);
   },
 
   // ── Reports: Intent ──────────────────────────────────────────
