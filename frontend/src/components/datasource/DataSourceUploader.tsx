@@ -76,8 +76,8 @@ export function DataSourceUploader() {
   const loadTemplates = useCallback(async () => {
     setTemplatesLoading(true);
     try {
-      const result = await reportApi.listTemplates();
-      setTemplates(result.data || []);
+      const templates = await reportApi.listTemplates();
+      setTemplates(templates || []);
     } catch {
       // Templates not critical; can proceed without
     }

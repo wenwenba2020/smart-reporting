@@ -68,7 +68,7 @@ export const reportApi = {
   // ── Templates ────────────────────────────────────────────────
   listTemplates: (category?: string) => {
     const qs = category ? `?category=${category}` : '';
-    return request<{ data: ReportTemplate[] }>(`/templates/${qs}`);
+    return request<ReportTemplate[]>(`/templates/${qs}`);
   },
 
   // ── Reports: Intent ──────────────────────────────────────────

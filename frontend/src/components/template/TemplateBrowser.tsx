@@ -17,10 +17,9 @@ export function TemplateBrowser() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {
-    reportApi.listTemplates().then(data => {
-      const all = data.data || [];
-      setTemplates(all);
-      setFiltered(all);
+    reportApi.listTemplates().then(templates => {
+      setTemplates(templates);
+      setFiltered(templates);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
