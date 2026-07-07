@@ -10,36 +10,80 @@ sections:
   description: 分析范围、供应链环节、关键指标
   source: generated
   suggested_length: short
+  example: '**范围**: 华南区供应链全链路 | **周期**: Q2 | **目标**: 识别效率瓶颈，降低总成本'
 - key: procurement_analysis
   title: 采购分析
   required: false
   description: 采购成本、供应商绩效、采购周期分析
   source: generated
   suggested_length: medium
+  example: '| 指标 | Q1 | Q2 | 变化 |
+
+    |------|-----|-----|------|
+
+    | 采购成本(万元) | 1,800 | 1,750 | -2.8% |
+
+    | 准时交付率 | 88% | 92% | +4pp |
+
+    | 采购周期(天) | 25 | 22 | -12% |'
 - key: inventory_analysis
   title: 库存分析
   required: true
   description: 库存周转率、库存结构、呆滞库存分析
   source: generated
   suggested_length: medium
+  example: '| 指标 | Q1 | Q2 | 目标 |
+
+    |------|-----|-----|------|
+
+    | 库存周转天数 | 35 | 28 | 30 |
+
+    | 呆滞库存占比 | 8% | 5% | 5% |
+
+    | 缺货率 | 3.2% | 2.1% | 2% |'
 - key: logistics_analysis
   title: 物流分析
   required: false
   description: 配送时效、物流成本、配送准确率
   source: generated
   suggested_length: medium
+  example: '| 指标 | Q1 | Q2 | 变化 |
+
+    |------|-----|-----|------|
+
+    | 物流成本 | 280 | 265 | -5.4% |
+
+    | 配送时效(h) | 36 | 28 | -22% |
+
+    | 配送准确率 | 97% | 98.5% | +1.5pp |'
 - key: efficiency_metrics
   title: 效率指标
   required: true
   description: 端到端交付周期、准时交付率、供应链总成本
   source: generated
   suggested_length: medium
+  example: '| 指标 | 当前 | 标杆 | 差距 |
+
+    |------|------|------|------|
+
+    | 端到端周期 | 12天 | 8天 | -4天 |
+
+    | OTIF | 91% | 95% | -4pp |
+
+    | 总成本占比 | 12.5% | 10% | -2.5pp |'
 - key: optimization_plan
   title: 优化方案
   required: true
   description: 供应链瓶颈识别、优化建议、预期收益
   source: generated
   suggested_length: medium
+  example: '1. **库存优化**: 推行VMI，目标周转天数25天
+
+    2. **物流升级**: 引入TMS系统
+
+    3. **供应商整合**: 42家→35家
+
+    **预期收益**: 年节省约400万元'
 system_prompt: 你是一个供应链分析专家。从采购、库存、物流等环节全面分析供应链效率，识别瓶颈并给出优化建议。
 suggested_charts:
 - bar

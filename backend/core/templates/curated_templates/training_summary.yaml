@@ -10,36 +10,76 @@ sections:
   description: 培训主题、时间、参与人数、讲师、目标
   source: generated
   suggested_length: short
+  example: '**主题**: 华南区销售技能提升训练营 | **时间**: 2026年7月10-12日 | **参训**: 25人 | **出勤率**:
+    100%'
 - key: curriculum_design
   title: 课程设计
   required: false
   description: 课程体系、内容安排、教学方式
   source: generated
   suggested_length: medium
+  example: '| 模块 | 内容 | 时长 | 形式 |
+
+    |------|------|------|------|
+
+    | 模块1 | 顾问式销售方法论 | 4h | 讲授+案例 |
+
+    | 模块2 | 大客户关系管理 | 4h | 讲授+演练 |
+
+    | 模块3 | 谈判技巧与报价策略 | 4h | 角色扮演 |'
 - key: attendance_engagement
   title: 出勤与参与度
   required: true
   description: 出勤率、课堂互动、课后作业完成情况
   source: generated
   suggested_length: medium
+  example: '- **出勤率**: 25/25（100%）
+
+    - **课堂互动**: 人均提问3.2次
+
+    - **课后作业**: 提交率92%，平均分85分
+
+    - **满意度**: 4.5/5.0'
 - key: learning_outcomes
   title: 学习成果
   required: true
   description: 考核成绩、技能提升、知识掌握程度评估
   source: generated
   suggested_length: long
+  example: '| 维度 | 训前 | 训后 | 提升 |
+
+    |------|------|------|------|
+
+    | 销售方法论 | 3.2 | 4.3 | +34% |
+
+    | 谈判技巧 | 3.0 | 4.1 | +37% |
+
+    | 数据分析 | 2.8 | 3.8 | +36% |
+
+
+    **认证通过率**: 24/25（96%）'
 - key: feedback_analysis
   title: 学员反馈
   required: true
   description: 满意度调查结果、意见和建议汇总
   source: generated
   suggested_length: medium
+  example: '**正面**: 案例贴近实际（85%）、角色扮演有价值（78%）、讲师专业（92%）
+
+    **改进**: 时间太紧（30%）、希望增加线上工具实操（25%）'
 - key: improvement_suggestions
   title: 改进建议
   required: true
   description: 课程优化、教学改进、后续跟进计划
   source: generated
   suggested_length: medium
+  example: '1. 下期延长至4天
+
+    2. 增加CRM工具实操培训
+
+    3. 设计新人/资深差异化课程
+
+    4. 训后90天跟进辅导'
 system_prompt: 你是一个培训评估专家。全面评估培训项目的设计、执行和效果，给出可操作的改进建议。
 suggested_charts:
 - bar

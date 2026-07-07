@@ -10,36 +10,68 @@ sections:
   description: 调研目的、范围、方法论说明
   source: generated
   suggested_length: short
+  example: 本次调研评估智能报表平台在华南区中大型企业的市场机会。调研方式：行业报告+50家企业访谈+竞品调研。
 - key: market_overview
   title: 市场概况
   required: true
   description: 市场规模、增长率、发展阶段、关键驱动因素
   source: generated
   suggested_length: medium
+  example: '| 指标 | 2025 | 2026E | CAGR |
+
+    |------|------|-------|------|
+
+    | 市场规模(亿元) | 180 | 225 | 25% |
+
+    | 企业渗透率 | 15% | 22% | — |'
 - key: competitive_landscape
   title: 竞争格局
   required: true
   description: 主要玩家、市场份额、竞争态势、进入壁垒
   source: generated
   suggested_length: long
+  example: '| 厂商 | 市占 | 定位 | 优势 | 劣势 |
+
+    |------|------|------|------|------|
+
+    | A公司 | 25% | 高端 | 品牌强 | 价格高 |
+
+    | B公司 | 18% | 中端 | 功能全 | 体验差 |
+
+    | 我们 | 8% | 中高端 | 智能+定制 | 品牌弱 |'
 - key: customer_insights
   title: 客户洞察
   required: true
   description: 目标客户特征、需求痛点、购买行为、决策因素
   source: generated
   suggested_length: medium
+  example: '- **TOP3需求**: 数据自动采集（78%）、AI辅助分析（65%）、多格式导出（58%）
+
+    - **预算范围**: 中型企业10-30万/年，大型企业50-100万/年'
 - key: trends_opportunities
   title: 趋势与机会
   required: true
   description: 行业发展趋势、新兴机会、潜在威胁
   source: generated
   suggested_length: medium
+  example: '1. **AI增强分析**: 自然语言查询成为新趋势
+
+    2. **嵌入式BI**: CRM/ERP中嵌入报表，市场空间大
+
+    3. **行业垂直化**: 金融/医药/制造定制方案溢价30%+'
 - key: strategic_recommendations
   title: 战略建议
   required: true
   description: 市场进入/拓展策略、产品定位建议、风险应对
   source: generated
   suggested_length: medium
+  example: '**定位**: AI驱动的智能报表平台
+
+    **目标客群**: 年营收5,000万-10亿的中大型企业
+
+    **市场策略**: 行业深耕+渠道合作+内容营销
+
+    **目标**: 3年内市场份额从8%提升至15%'
 system_prompt: 你是一个市场研究分析师。客观呈现市场数据，深入分析竞争格局，识别趋势和机会。所有数据必须来源于数据源，不得编造。
 suggested_charts:
 - bar

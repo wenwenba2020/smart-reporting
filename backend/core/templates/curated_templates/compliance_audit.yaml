@@ -10,18 +10,39 @@ sections:
   description: 审计对象、审计期间、审计标准、审计方法
   source: generated
   suggested_length: short
+  example: '**对象**: 智能报表平台项目 | **期间**: 2026年1-6月 | **标准**: ISO 27001+C-SOX'
 - key: findings
   title: 审计发现
   required: true
   description: 不符合项、潜在风险、流程缺陷的详细描述
   source: generated
   suggested_length: long
+  example: '| 编号 | 发现 | 类别 | 等级 |
+
+    |------|------|------|------|
+
+    | F1 | 未启用MFA | 安全 | 🔴高 |
+
+    | F2 | 日志明文存手机号 | 隐私 | 🔴高 |
+
+    | F3 | 未设分支保护 | 流程 | 🟡中 |
+
+    | F4 | 未定期漏洞扫描 | 安全 | 🟡中 |'
 - key: severity_assessment
   title: 问题等级评估
   required: true
   description: 按严重程度（重大/重要/一般）分类汇总
   source: generated
   suggested_length: medium
+  example: '| 等级 | 数量 | 占比 |
+
+    |------|------|------|
+
+    | 🔴 高 | 2 | 33% |
+
+    | 🟡 中 | 2 | 33% |
+
+    | 🟢 低 | 2 | 33% |'
 - key: root_cause
   title: 根因分析
   required: false
@@ -34,12 +55,26 @@ sections:
   description: 针对性的整改方案、责任部门、完成期限
   source: generated
   suggested_length: long
+  example: '| 编号 | 措施 | 责任人 | 期限 |
+
+    |------|------|--------|------|
+
+    | F1 | 启用MFA | 王五 | 8/15 |
+
+    | F2 | 日志脱敏(→hash) | 王五 | 8/30 |
+
+    | F3 | 分支保护+CR | 李四 | 7/30 |
+
+    | F4 | 集成Dependabot | 王五 | 8/15 |'
 - key: follow_up
   title: 后续跟踪
   required: true
   description: 整改验证计划、跟踪机制、下一次审计时间
   source: generated
   suggested_length: short
+  example: '- **复查**: 2026年10月15日
+
+    - **下次审计**: 2027年1月'
 system_prompt: 你是一个专业审计师。严格依据审计标准和证据，客观呈现审计发现。整改建议要具体、可执行、有期限。
 suggested_charts:
 - bar

@@ -4,50 +4,86 @@ category: 分析类
 parent_meta: meta_analysis
 description: 适用于销售团队业绩分析，涵盖个人/团队/区域/产品等多维度销售数据
 sections:
-  - key: sales_overview
-    title: 销售概览
-    required: true
-    description: 整体销售业绩、达成率、同比环比趋势
-    source: generated
-    suggested_length: short
-  - key: regional_analysis
-    title: 区域分析
-    required: true
-    description: 各区域的销售数据、市场占有率、增长潜力
-    source: generated
-    suggested_length: long
-  - key: product_analysis
-    title: 产品线分析
-    required: true
-    description: 各产品/服务的销售表现、毛利率、库存周转
-    source: generated
-    suggested_length: long
-  - key: team_performance
-    title: 团队/个人业绩
-    required: true
-    description: 各销售团队及个人的业绩排名与完成率
-    source: generated
-    suggested_length: medium
-  - key: customer_analysis
-    title: 客户分析
-    required: false
-    description: 新客获取、老客复购、客户流失、大客户贡献分析
-    source: generated
-    suggested_length: medium
-  - key: forecast
-    title: 销售预测
-    required: false
-    description: 基于趋势和管道的下期销售预测
-    source: generated
-    suggested_length: medium
-  - key: recommendations
-    title: 策略建议
-    required: true
-    description: 提升销售业绩的具体策略和行动方案
-    source: generated
-    suggested_length: medium
-system_prompt: |
-  你是一个销售运营分析专家。请基于数据源中的销售数据，进行多维度深度分析。
+- key: sales_overview
+  title: 销售概览
+  required: true
+  description: 整体销售业绩、达成率、同比环比趋势
+  source: generated
+  suggested_length: short
+- key: regional_analysis
+  title: 区域分析
+  required: true
+  description: 各区域的销售数据、市场占有率、增长潜力
+  source: generated
+  suggested_length: long
+- key: product_analysis
+  title: 产品线分析
+  required: true
+  description: 各产品/服务的销售表现、毛利率、库存周转
+  source: generated
+  suggested_length: long
+- key: team_performance
+  title: 团队/个人业绩
+  required: true
+  description: 各销售团队及个人的业绩排名与完成率
+  source: generated
+  suggested_length: medium
+  example: '| 销售团队 | 人数 | 销售额(万元) | 人均产出 | 达标率 |
+
+    |----------|------|-------------|----------|--------|
+
+    | 华南一队(广东) | 8 | 5,250 | 656 | 100% |
+
+    | 华南二队(广西) | 5 | 1,710 | 342 | 80% |
+
+    | 华南三队(海南) | 4 | 1,260 | 315 | 100% |
+
+    | 电商团队 | 3 | 1,180 | 393 | 100% |'
+- key: customer_analysis
+  title: 客户分析
+  required: false
+  description: 新客获取、老客复购、客户流失、大客户贡献分析
+  source: generated
+  suggested_length: medium
+  example: '| 客户类型 | 客户数 | 销售额(万元) | 客单价 | 续约率 |
+
+    |----------|--------|-------------|--------|--------|
+
+    | 战略客户 | 12 | 3,200 | 267万 | 100% |
+
+    | 大客户 | 45 | 3,500 | 78万 | 92% |
+
+    | 中小客户 | 230 | 2,200 | 9.6万 | 78% |'
+- key: forecast
+  title: 销售预测
+  required: false
+  description: 基于趋势和管道的下期销售预测
+  source: generated
+  suggested_length: medium
+- key: recommendations
+  title: 策略建议
+  required: true
+  description: 提升销售业绩的具体策略和行动方案
+  source: generated
+  suggested_length: medium
+  example: '1. **广西市场攻坚**: 增配2名销售，目标Q4达成率提升至100%
+
+    2. **电商深化**: 加大抖音/小红书内容营销投入
+
+    3. **产品升级**: 推出A系列升级版，拉升高端产品毛利率至48%
+
+    4. **新客策略**: 启动中小企业专项拓展计划，目标Q4新增客户100家'
+system_prompt: '你是一个销售运营分析专家。请基于数据源中的销售数据，进行多维度深度分析。
+
   所有数据必须真实来源于数据源，分析要揭示业务本质。
+
   关注趋势变化和异常值，预测要有数据依据，建议要可落地执行。
-suggested_charts: [bar, line, pie, funnel, map, table]
+
+  '
+suggested_charts:
+- bar
+- line
+- pie
+- funnel
+- map
+- table

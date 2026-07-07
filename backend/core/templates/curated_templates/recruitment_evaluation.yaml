@@ -10,36 +10,83 @@ sections:
   description: 招聘周期、岗位数量、简历量、录用人数等关键指标
   source: generated
   suggested_length: short
+  example: '**周期**: 2026年Q2 | **岗位数**: 15个 | **简历**: 680份 | **面试**: 120人 | **录用**:
+    18人 | **到岗**: 16人（89%）'
 - key: channel_analysis
   title: 渠道效果分析
   required: true
   description: 各招聘渠道的简历量、转化率、成本效益对比
   source: generated
   suggested_length: medium
+  example: '| 渠道 | 简历量 | 录用 | 转化率 | 人均成本 |
+
+    |------|--------|------|--------|----------|
+
+    | Boss直聘 | 280 | 8 | 2.9% | 3,500 |
+
+    | 猎聘 | 150 | 5 | 3.3% | 8,000 |
+
+    | 内推 | 120 | 3 | 2.5% | 2,000 |'
 - key: process_efficiency
   title: 流程效率
   required: true
   description: 各环节时长、通过率、瓶颈分析
   source: generated
   suggested_length: medium
+  example: '| 环节 | 平均时长 | 目标 |
+
+    |------|----------|------|
+
+    | 简历筛选 | 2天 | 1天 |
+
+    | HR初面 | 3天 | 2天 |
+
+    | 业务面试 | 5天 | 4天 |
+
+    | **全流程** | **13天** | **9天** |'
 - key: candidate_quality
   title: 候选人质量评估
   required: true
   description: 学历/经验/技能分布、面试评分统计
   source: generated
   suggested_length: medium
+  example: '| 维度 | 评分 |
+
+    |------|------|
+
+    | 专业匹配度 | 4.0/5 |
+
+    | 学历背景 | 4.2/5 |
+
+    | 沟通能力 | 3.8/5 |'
 - key: cost_analysis
   title: 招聘成本分析
   required: false
   description: 人均招聘成本、渠道成本、ROI评估
   source: generated
   suggested_length: medium
+  example: '| 费用项 | 金额(万元) |
+
+    |--------|-----------|
+
+    | 渠道费用 | 8.5 |
+
+    | HR成本 | 4.0 |
+
+    | **人均成本** | **0.97万元** |'
 - key: improvement_plan
   title: 改进建议
   required: true
   description: 流程优化、渠道策略调整、雇主品牌提升建议
   source: generated
   suggested_length: medium
+  example: '1. **缩短流程**: 目标全流程10天内
+
+    2. **渠道优化**: 加大内推激励（奖金提升至5000）
+
+    3. **雇主品牌**: 启动技术博客+开源项目
+
+    4. **面试官培训**: Q3组织2场培训'
 system_prompt: 你是一个HR分析专家。基于招聘数据客观评估招聘效果，识别问题和改进机会。所有数据必须来源于数据源。
 suggested_charts:
 - funnel

@@ -4,50 +4,70 @@ category: 进度类
 parent_meta: meta_progress
 description: 适用于单个或多个项目的进度汇报，面向项目经理和项目干系人
 sections:
-  - key: project_overview
-    title: 项目概览
-    required: true
-    description: 项目名称、目标、整体进度百分比、健康度评分
-    source: generated
-    suggested_length: short
-  - key: milestone_status
-    title: 里程碑状态
-    required: true
-    description: 各里程碑完成情况、偏差分析
-    source: generated
-    suggested_length: medium
-  - key: sprint_review
-    title: 本期迭代回顾
-    required: true
-    description: 本迭代周期内的任务完成、需求变更、技术攻关
-    source: generated
-    suggested_length: long
-  - key: resource_usage
-    title: 资源使用情况
-    required: false
-    description: 人力资源投入、预算消耗、设备使用等
-    source: generated
-    suggested_length: medium
-  - key: quality_metrics
-    title: 质量指标
-    required: false
-    description: 缺陷密度、测试覆盖率、代码质量等质量指标
-    source: generated
-    suggested_length: medium
-  - key: blockers_risks
-    title: 阻塞与风险
-    required: true
-    description: 当前阻塞项、潜在风险及应对策略
-    source: generated
-    suggested_length: medium
-  - key: next_sprint
-    title: 下期计划
-    required: true
-    description: 下一迭代的目标、任务分解与排期
-    source: generated
-    suggested_length: medium
-system_prompt: |
-  你是一个专业的项目经理。请基于数据源中的项目数据，准确反映项目真实进度。
+- key: project_overview
+  title: 项目概览
+  required: true
+  description: 项目名称、目标、整体进度百分比、健康度评分
+  source: generated
+  suggested_length: short
+  example: '**项目名称**: 智能报表平台建设 | **项目经理**: 李四 | **项目周期**: 2026年6月-9月（4个月）
+
+    **当前阶段**: 开发测试阶段 | **整体进度**: 65% | **预算执行**: 58%'
+- key: milestone_status
+  title: 里程碑状态
+  required: true
+  description: 各里程碑完成情况、偏差分析
+  source: generated
+  suggested_length: medium
+- key: sprint_review
+  title: 本期迭代回顾
+  required: true
+  description: 本迭代周期内的任务完成、需求变更、技术攻关
+  source: generated
+  suggested_length: long
+- key: resource_usage
+  title: 资源使用情况
+  required: false
+  description: 人力资源投入、预算消耗、设备使用等
+  source: generated
+  suggested_length: medium
+  example: '| 资源 | 计划 | 实际 | 利用率 |
+
+    |------|------|------|--------|
+
+    | 开发(人天) | 120 | 115 | 96% |
+
+    | 测试(人天) | 40 | 25 | 63% |
+
+    | 预算(万元) | 80 | 46.4 | 58% |'
+- key: quality_metrics
+  title: 质量指标
+  required: false
+  description: 缺陷密度、测试覆盖率、代码质量等质量指标
+  source: generated
+  suggested_length: medium
+- key: blockers_risks
+  title: 阻塞与风险
+  required: true
+  description: 当前阻塞项、潜在风险及应对策略
+  source: generated
+  suggested_length: medium
+- key: next_sprint
+  title: 下期计划
+  required: true
+  description: 下一迭代的目标、任务分解与排期
+  source: generated
+  suggested_length: medium
+system_prompt: '你是一个专业的项目经理。请基于数据源中的项目数据，准确反映项目真实进度。
+
   对延期和阻塞要如实报告，分析根本原因，提出可操作的应对方案。
+
   使用项目管理专业术语，保持报告的客观性和可追溯性。
-suggested_charts: [gantt, burndown, bar, pie, table]
+
+  '
+suggested_charts:
+- gantt
+- burndown
+- bar
+- pie
+- table

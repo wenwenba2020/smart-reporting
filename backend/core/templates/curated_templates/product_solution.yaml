@@ -10,12 +10,16 @@ sections:
   description: 方案核心价值和关键亮点概述
   source: generated
   suggested_length: short
+  example: 本方案为XX集团量身定制的智能报表平台解决方案。集成ERP、CRM、MES三大数据源，实施周期4个月，ROI 12个月。
 - key: client_profile
   title: 客户概况与需求
   required: true
   description: 客户基本情况、业务痛点、核心诉求
   source: generated
   suggested_length: medium
+  example: '**客户**: XX集团 | **行业**: 电子制造 | **规模**: 年营收25亿元
+
+    **痛点**: 数据分散5个系统、报表耗时3天/周、合规审计成本高'
 - key: industry_background
   title: 行业背景
   required: false
@@ -28,12 +32,24 @@ sections:
   description: 产品/服务方案详细介绍、技术架构、实施路径
   source: generated
   suggested_length: long
+  example: '**架构**: 数据源层(ERP/CRM/MES) → 数据中台 → AI引擎 → 报表输出
+
+    **模块**: 1.数据自动采集 2.智能模板(制造行业12个) 3.AI生成 4.多格式输出'
 - key: value_proposition
   title: 价值主张
   required: true
   description: 为客户带来的具体价值、ROI测算、竞争优势
   source: generated
   suggested_length: medium
+  example: '| 维度 | 现状 | 方案后 | 提升 |
+
+    |------|------|--------|------|
+
+    | 报表时间 | 3天/周 | 2h/周 | -95% |
+
+    | 数据准确率 | 92% | 99.5% | +7.5pp |
+
+    | 合规审计 | 50万/年 | 15万/年 | -70% |'
 - key: case_studies
   title: 案例参考
   required: false
@@ -52,6 +68,19 @@ sections:
   description: 项目周期、里程碑、资源需求、风险预案
   source: generated
   suggested_length: medium
+  example: '| 阶段 | 时间 | 交付物 |
+
+    |------|------|--------|
+
+    | 需求调研 | 1-2周 | 需求规格书 |
+
+    | 数据对接 | 3-6周 | 接口文档 |
+
+    | 平台部署 | 7-10周 | 生产环境 |
+
+    | 模板定制 | 11-14周 | 12个模板 |
+
+    | 培训上线 | 15-16周 | Go-live |'
 system_prompt: 你是一个解决方案架构师。从客户需求出发，设计针对性的产品解决方案。突出差异化价值，用数据和案例支撑论证。
 suggested_charts:
 - bar

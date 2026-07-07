@@ -10,18 +10,35 @@ sections:
   description: 评估对象、风险维度、评估方法、数据来源
   source: generated
   suggested_length: short
+  example: '**评估对象**: 智能报表平台项目 | **期间**: 2026年7月
+
+    **维度**: 技术/项目/运营/合规 | **方法**: 专家评审+数据分析'
 - key: risk_inventory
   title: 风险清单
   required: true
   description: 识别出的所有风险项，按类别和严重程度排序
   source: generated
   suggested_length: long
+  example: '| 编号 | 风险 | 类别 | 概率 | 影响 | 等级 |
+
+    |------|------|------|------|------|------|
+
+    | R1 | API变更延期 | 技术 | 中 | 高 | 🔴 |
+
+    | R2 | 数据迁移丢失 | 技术 | 低 | 极高 | 🟡 |
+
+    | R3 | 关键人员离职 | 项目 | 中 | 高 | 🔴 |
+
+    | R4 | 需求变更 | 项目 | 中 | 中 | 🟡 |'
 - key: risk_analysis
   title: 风险分析
   required: true
   description: 各风险的发生概率、影响程度、风险等级评估矩阵
   source: generated
   suggested_length: long
+  example: '**高风险**: R1 API变更（提前对接新API）、R3 人员离职（留任激励+知识备份）
+
+    **中风险**: 5项已制定缓解措施'
 - key: existing_controls
   title: 现有控制措施
   required: false
@@ -34,12 +51,24 @@ sections:
   description: 针对高中风险的具体应对措施、责任人和时间表
   source: generated
   suggested_length: medium
+  example: '| 风险 | 措施 | 责任人 | 期限 |
+
+    |------|------|--------|------|
+
+    | R1 | 8月初完成新API对接 | 王五 | 8/15 |
+
+    | R3 | 留任方案+指定backup | 李四 | 7/20 |'
 - key: monitoring_mechanism
   title: 监控机制
   required: false
   description: 风险持续监测指标、预警阈值、报告机制
   source: generated
   suggested_length: short
+  example: '- **周度**: 风险状态红黄绿灯展示
+
+    - **月度**: 风险评审会
+
+    - **预警**: 高风险>2或中风险>5触发升级'
 system_prompt: 你是一个风险管理专家。系统性地识别、分析和评估风险，制定切实可行的应对方案。客观冷静，既不夸大也不淡化风险。
 suggested_charts:
 - heatmap

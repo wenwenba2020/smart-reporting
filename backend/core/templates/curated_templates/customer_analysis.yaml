@@ -4,44 +4,92 @@ category: 分析类
 parent_meta: meta_analysis
 description: 适用于客户画像分析、客户分层、客户行为分析、客户价值评估等场景
 sections:
-  - key: overview
-    title: 分析概述
-    required: true
-    description: 分析目的、客户范围、数据来源、分析方法
-    source: generated
-    suggested_length: short
-  - key: customer_profile
-    title: 客户画像
-    required: true
-    description: 客户基本特征、行业分布、规模分布、地域分布
-    source: generated
-    suggested_length: medium
-  - key: customer_segmentation
-    title: 客户分层分析
-    required: true
-    description: 按价值/活跃度/生命周期等维度进行客户分层，各层特征和占比
-    source: generated
-    suggested_length: long
-  - key: behavior_analysis
-    title: 客户行为分析
-    required: false
-    description: 购买频次、偏好产品、决策周期、流失预警
-    source: generated
-    suggested_length: medium
-  - key: value_assessment
-    title: 客户价值评估
-    required: true
-    description: CLV估算、利润率分析、增长潜力评估
-    source: generated
-    suggested_length: medium
-  - key: recommendations
-    title: 客户运营建议
-    required: true
-    description: 针对不同客户分层的运营策略、挽留方案、拓展建议
-    source: generated
-    suggested_length: medium
-system_prompt: |
-  你是一个客户分析专家。请从数据源中提取客户相关数据，进行多维度客户分析。
+- key: overview
+  title: 分析概述
+  required: true
+  description: 分析目的、客户范围、数据来源、分析方法
+  source: generated
+  suggested_length: short
+  example: 本次客户分析覆盖华南区2026年Q2活跃客户1,200家，聚焦客户分层、行为模式和生命周期价值。
+- key: customer_profile
+  title: 客户画像
+  required: true
+  description: 客户基本特征、行业分布、规模分布、地域分布
+  source: generated
+  suggested_length: medium
+  example: '| 维度 | 分布 |
+
+    |------|------|
+
+    | 行业 | 制造业35%、IT/互联网25%、金融18%、其他22% |
+
+    | 规模 | 大型10%、中型35%、小型55% |
+
+    | 地域 | 广东省60%、广西省25%、海南省15% |'
+- key: customer_segmentation
+  title: 客户分层分析
+  required: true
+  description: 按价值/活跃度/生命周期等维度进行客户分层，各层特征和占比
+  source: generated
+  suggested_length: long
+  example: '| 层级 | 客户数 | 收入占比 | 特征 |
+
+    |------|--------|----------|------|
+
+    | VIP | 50(4%) | 40% | 高频、高满意度 |
+
+    | 核心 | 200(17%) | 35% | 稳定、中等频次 |
+
+    | 普通 | 500(42%) | 20% | 低频 |
+
+    | 流失风险 | 200(17%) | 4% | 近3月无购买 |'
+- key: behavior_analysis
+  title: 客户行为分析
+  required: false
+  description: 购买频次、偏好产品、决策周期、流失预警
+  source: generated
+  suggested_length: medium
+  example: '- **购买频次**: VIP客户月均3.2次，普通客户月均0.8次
+
+    - **偏好产品**: A系列最受欢迎（占45%），B系列次之（30%）
+
+    - **流失信号**: 连续2月无购买+客服投诉=高流失风险'
+- key: value_assessment
+  title: 客户价值评估
+  required: true
+  description: CLV估算、利润率分析、增长潜力评估
+  source: generated
+  suggested_length: medium
+  example: '| 层级 | 年均CLV(万元) | 获客成本(万元) | CLV/CAC |
+
+    |------|-------------|---------------|--------|
+
+    | VIP | 120 | 5 | 24x |
+
+    | 核心 | 28 | 3 | 9.3x |
+
+    | 普通 | 6.4 | 2 | 3.2x |'
+- key: recommendations
+  title: 客户运营建议
+  required: true
+  description: 针对不同客户分层的运营策略、挽留方案、拓展建议
+  source: generated
+  suggested_length: medium
+  example: '1. **VIP深耕**: 每季度高层拜访，目标续约率100%
+
+    2. **核心客户提升**: 交叉销售，目标升级率15%
+
+    3. **流失预警**: 建立预警模型，高风险客户专项跟进'
+system_prompt: '你是一个客户分析专家。请从数据源中提取客户相关数据，进行多维度客户分析。
+
   重点关注客户分层、行为模式和价值贡献，给出可落地的运营建议。
+
   所有数据必须来源于数据源，不得编造。
-suggested_charts: [pie, bar, scatter, funnel, table]
+
+  '
+suggested_charts:
+- pie
+- bar
+- scatter
+- funnel
+- table

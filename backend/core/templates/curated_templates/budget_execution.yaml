@@ -10,36 +10,78 @@ sections:
   description: 预算总额、已执行金额、执行率、剩余额度
   source: generated
   suggested_length: short
+  example: '**周期**: 2026年 | **总预算**: 5,000万元 | **已执行**: 2,850万元（57%）| **剩余**: 2,150万元（43%）'
 - key: category_breakdown
   title: 分类预算执行
   required: true
   description: 各预算科目的执行明细和偏差分析
   source: generated
   suggested_length: long
+  example: '| 科目 | 年度预算 | 已执行 | 执行率 |
+
+    |------|----------|--------|--------|
+
+    | 人力成本 | 2,400 | 1,450 | 60% |
+
+    | 市场推广 | 800 | 520 | 65% |
+
+    | 技术研发 | 600 | 320 | 53% |
+
+    | **合计** | **5,000** | **2,850** | **57%** |'
 - key: department_analysis
   title: 部门预算分析
   required: false
   description: 各部门预算执行情况对比
   source: generated
   suggested_length: medium
+  example: '| 部门 | 预算 | 已执行 | 评价 |
+
+    |------|------|--------|------|
+
+    | 销售部 | 1,800 | 1,100 | 正常 |
+
+    | 技术部 | 1,500 | 820 | 偏慢 |
+
+    | 市场部 | 700 | 460 | 偏快 |'
 - key: variance_analysis
   title: 偏差原因分析
   required: true
   description: 重大偏差的原因分析和影响评估
   source: generated
   suggested_length: medium
+  example: '**超预算**: 市场推广+6.7%（新增抖音投放）
+
+    **低执行**: 技术研发53%（招聘延迟）
+
+    **合理**: 人力60%（符合预期）'
 - key: forecast
   title: 全年预测
   required: false
   description: 基于当前执行情况的全年预算预测
   source: generated
   suggested_length: short
+  example: '| 科目 | 全年预测 | 预算 | 偏差 |
+
+    |------|----------|------|------|
+
+    | 人力 | 2,450 | 2,400 | +2% |
+
+    | 市场 | 850 | 800 | +6% |
+
+    | **合计** | **4,750** | **5,000** | **-5%** |
+
+    全年预计结余250万元。'
 - key: adjustment_recommendations
   title: 调整建议
   required: true
   description: 预算调整建议和费用管控优化方案
   source: generated
   suggested_length: medium
+  example: '1. 追加30万用于广西市场攻坚
+
+    2. 加快核心岗位招聘
+
+    3. 100万预备金转至市场推广'
 system_prompt: 你是一个预算管理专家。精确分析预算执行情况，识别偏差并分析原因，提出合理的调整建议。
 suggested_charts:
 - bar

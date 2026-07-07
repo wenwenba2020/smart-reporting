@@ -4,44 +4,77 @@ category: 总结类
 parent_meta: meta_summary
 description: 适用于各类会议的纪要记录，结构化记录会议核心内容与决议
 sections:
-  - key: meeting_info
-    title: 会议基本信息
-    required: true
-    description: 会议名称、时间、地点、主持人、参会人员
-    source: generated
-    suggested_length: short
-  - key: agenda
-    title: 会议议程
-    required: true
-    description: 会议议题列表及时间分配
-    source: generated
-    suggested_length: short
-  - key: discussion
-    title: 讨论要点
-    required: true
-    description: 各议题的核心讨论内容、各方观点、关键发言
-    source: generated
-    suggested_length: long
-  - key: decisions
-    title: 决议事项
-    required: true
-    description: 会议形成的主要决策和结论
-    source: generated
-    suggested_length: medium
-  - key: action_items
-    title: 待办事项
-    required: true
-    description: 待办任务、负责人、完成时限的明确清单
-    source: generated
-    suggested_length: medium
-  - key: next_meeting
-    title: 下次会议
-    required: false
-    description: 下次会议的时间、地点和主要议题预告
-    source: generated
-    suggested_length: short
-system_prompt: |
-  你是一个专业的会议记录员。请基于数据源中的会议录音或记录，准确提炼会议要点。
+- key: meeting_info
+  title: 会议基本信息
+  required: true
+  description: 会议名称、时间、地点、主持人、参会人员
+  source: generated
+  suggested_length: short
+  example: '**会议主题**: Q3华南区销售策略研讨会 | **时间**: 2026年7月5日 14:00-16:30
+
+    **主持人**: 王总 | **记录人**: 李四 | **参会**: 华南区销售团队全员（15人）'
+- key: agenda
+  title: 会议议程
+  required: true
+  description: 会议议题列表及时间分配
+  source: generated
+  suggested_length: short
+  example: '1. Q2销售业绩复盘（14:00-14:30）
+
+    2. 市场趋势与竞品动态（14:30-15:00）
+
+    3. Q3销售策略与目标分解（15:00-15:45）
+
+    4. 资源需求与行动计划（15:45-16:15）'
+- key: discussion
+  title: 讨论要点
+  required: true
+  description: 各议题的核心讨论内容、各方观点、关键发言
+  source: generated
+  suggested_length: long
+- key: decisions
+  title: 决议事项
+  required: true
+  description: 会议形成的主要决策和结论
+  source: generated
+  suggested_length: medium
+  example: '1. ✅ 通过Q3销售目标：整体9,000万元，增长率10%
+
+    2. ✅ 批准深圳市场增配2名销售
+
+    3. ✅ 通过电商渠道专项预算50万元
+
+    4. ✅ 确定8月中旬召开渠道合作伙伴大会'
+- key: action_items
+  title: 待办事项
+  required: true
+  description: 待办任务、负责人、完成时限的明确清单
+  source: generated
+  suggested_length: medium
+  example: '| 行动项 | 责任人 | 截止日期 |
+
+    |--------|--------|----------|
+
+    | Q3目标分解到个人 | 张三 | 7/8 |
+
+    | 广西市场攻坚方案 | 李四 | 7/14 |
+
+    | 电商专项预算申请 | 王五 | 7/10 |
+
+    | 渠道大会方案 | 赵六 | 7/20 |'
+- key: next_meeting
+  title: 下次会议
+  required: false
+  description: 下次会议的时间、地点和主要议题预告
+  source: generated
+  suggested_length: short
+  example: '**下次会议**: 7月19日（周三）14:00 | **主题**: Q3月度销售review'
+system_prompt: '你是一个专业的会议记录员。请基于数据源中的会议录音或记录，准确提炼会议要点。
+
   讨论内容要客观记录各方观点，决议和待办事项要清晰明确（含责任人和时限）。
+
   语言要简洁专业，避免冗余描述。待办事项要可追踪。
-suggested_charts: [table]
+
+  '
+suggested_charts:
+- table

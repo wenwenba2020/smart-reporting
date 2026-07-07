@@ -10,36 +10,82 @@ sections:
   description: 分析目标、竞品选择、对标维度、信息来源
   source: generated
   suggested_length: short
+  example: '**目标**: 评估华南区竞争态势 | **时间**: 2026年7月 | **维度**: 产品/定价/市场/口碑/技术'
 - key: competitor_profiles
   title: 竞品概况
   required: true
   description: 各竞品的基本信息、市场地位、核心能力
   source: generated
   suggested_length: medium
+  example: '| 竞品 | 成立 | 融资 | 市占 | 定位 |
+
+    |------|------|------|------|------|
+
+    | A公司 | 2018 | C轮5亿 | 25% | 高端 |
+
+    | B公司 | 2020 | B轮2亿 | 18% | 中端 |
+
+    | 我们 | 2022 | — | 8% | 中高端智能 |'
 - key: feature_comparison
   title: 功能/特性对比
   required: true
   description: 多维度功能特性对比表和差距分析
   source: generated
   suggested_length: long
+  example: '| 功能 | A | B | 我们 |
+
+    |------|---|---|------|
+
+    | 多数据源 | ✅ | ⚠️ | ✅ |
+
+    | AI报告 | ✅ | ⚠️ | ✅ |
+
+    | 企业PPT库 | ❌ | ❌ | ✅独家 |
+
+    | MCP开放 | ❌ | ❌ | ✅ |'
 - key: pricing_strategy
   title: 定价与商业模式
   required: false
   description: 竞品定价策略、商业模式对比分析
   source: generated
   suggested_length: medium
+  example: '| 竞品 | 入门 | 标准 | 企业 |
+
+    |------|------|------|------|
+
+    | A公司 | 15万 | 30万 | 50万+ |
+
+    | B公司 | 5万 | 12万 | 25万 |
+
+    | 我们 | 8万 | 18万 | 35万 |'
 - key: swot_analysis
   title: 优劣势分析
   required: true
   description: 我方相较于竞品的优势、劣势、机会、威胁
   source: generated
   suggested_length: medium
+  example: '**S**: AI领先、企业PPT库独家、MCP生态
+
+    **W**: 品牌弱、团队小、移动端未成熟
+
+    **O**: 赛道CAGR25%、喔壳渠道
+
+    **T**: A公司12月内可能复制、价格战风险'
 - key: strategic_actions
   title: 应对策略
   required: true
   description: 基于竞品分析的战略建议和行动方案
   source: generated
   suggested_length: medium
+  example: '1. **差异化**: 保持12个月技术领先
+
+    2. **品牌**: Q3启动SEO+内容营销
+
+    3. **渠道**: 喔壳集成→Q4新增50家
+
+    4. **人才**: 招聘2销售+3工程师
+
+    5. **本地部署**: Q4完成私有化版本'
 system_prompt: 你是一个竞争情报分析师。客观、系统地分析竞争对手，找出差异化的机会和威胁，给出可执行的应对策略。
 suggested_charts:
 - radar

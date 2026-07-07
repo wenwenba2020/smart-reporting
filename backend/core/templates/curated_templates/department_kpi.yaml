@@ -10,30 +10,75 @@ sections:
   description: 部门核心KPI指标仪表盘，达成率总览
   source: generated
   suggested_length: short
+  example: '**部门**: 华南销售部 | **周期**: 2026年Q3 | **评分**: 92.3分（A级）
+
+    | KPI维度 | 权重 | 目标 | 实际 | 达成率 |
+
+    |---------|------|------|------|--------|
+
+    | 销售额 | 40% | 9,000万 | 9,400万 | 104% |
+
+    | 回款率 | 20% | 95% | 93.1% | 98% |
+
+    | 客户满意度 | 15% | 4.0 | 4.2 | 105% |
+
+    | 新客开发 | 15% | 100家 | 95家 | 95% |'
 - key: metric_detail
   title: 指标详细分析
   required: true
   description: 逐个KPI指标分析：目标值、实际值、达成率、同比环比
   source: generated
   suggested_length: long
+  example: '**销售额（104%）**: 广东省+18%，电商+35%
+
+    **回款率（98%）**: 受2家大客户付款周期延长影响
+
+    **客户满意度（105%）**: 售后响应4h→30min是主因
+
+    **新客开发（95%）**: 广西区域滞后'
 - key: gap_analysis
   title: 差距分析
   required: true
   description: 未达标指标的原因分析和影响评估
   source: generated
   suggested_length: medium
+  example: '| 差距项 | 偏差 | 根因 |
+
+    |--------|------|------|
+
+    | 新客开发 | -5家 | 广西地推不足 |
+
+    | 回款率 | -1.9pp | 大客户延迟付款 |'
 - key: team_performance
   title: 团队/个人绩效
   required: false
   description: 团队成员绩效分布、关键贡献者
   source: generated
   suggested_length: medium
+  example: '| 团队 | 人均产出(万) | 达标率 |
+
+    |------|-------------|--------|
+
+    | 广东一队 | 656 | 100% |
+
+    | 广西二队 | 342 | 80% |
+
+    | 海南三队 | 315 | 100% |
+
+    | 电商团队 | 393 | 100% |'
 - key: improvement_actions
   title: 改善行动计划
   required: true
   description: 针对差距的具体改善措施、责任人和时间节点
   source: generated
   suggested_length: medium
+  example: '1. **广西攻坚**: 增配2名销售
+
+    2. **回款提升**: 建立大客户回款预警
+
+    3. **人才培养**: 广西团队专项辅导
+
+    4. **数字化**: 上线CRM销售看板'
 system_prompt: 你是一个绩效管理专家。基于KPI数据客观评估部门绩效，分析差距原因，制定可执行的改善计划。所有数据必须来源于数据源。
 suggested_charts:
 - gauge

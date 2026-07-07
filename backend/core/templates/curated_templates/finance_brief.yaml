@@ -10,36 +10,80 @@ sections:
   description: 核心财务指标一览和总体评价
   source: generated
   suggested_length: short
+  example: 7月财务摘要：营收3,850万元（达成率103%），毛利率42.5%，净利润585万元（净利率15.2%）。现金流健康。
 - key: revenue_analysis
   title: 收入分析
   required: true
   description: 收入构成、同比增长、预算达成率、主要驱动因素
   source: generated
   suggested_length: long
+  example: '| 项目 | 本月 | 预算 | 达成率 | 同比 |
+
+    |------|------|------|--------|------|
+
+    | 主营业务收入 | 3,500 | 3,400 | 103% | +16% |
+
+    | 服务收入 | 280 | 250 | 112% | +35% |
+
+    | **合计** | **3,850** | **3,700** | **104%** | **+17%** |'
 - key: cost_expense
   title: 成本费用分析
   required: true
   description: 成本结构、费用明细、同比环比变化
   source: generated
   suggested_length: medium
+  example: '| 项目 | 本月 | 占比 | 预算 |
+
+    |------|------|------|------|
+
+    | 营业成本 | 2,215 | 57.5% | 2,200 |
+
+    | 销售费用 | 520 | 13.5% | 550 |
+
+    | 管理费用 | 380 | 9.9% | 380 |
+
+    | **合计** | **3,265** | **84.8%** | **3,270** |'
 - key: profitability
   title: 盈利能力
   required: true
   description: 毛利率、净利率、ROI等盈利能力指标分析
   source: generated
   suggested_length: medium
+  example: '| 指标 | 本月 | 上月 | 目标 |
+
+    |------|------|------|------|
+
+    | 毛利率 | 42.5% | 41.8% | 42% |
+
+    | 净利率 | 15.2% | 14.5% | 14% |
+
+    | ROE(年化) | 22% | 21% | 20% |'
 - key: cash_flow
   title: 现金流状况
   required: false
   description: 经营性/投资性/融资性现金流分析
   source: generated
   suggested_length: medium
+  example: '| 项目 | 金额(万元) |
+
+    |------|----------|
+
+    | 期初现金 | 1,200 |
+
+    | 经营现金流 | +820 |
+
+    | 投资现金流 | -150 |
+
+    | 期末现金 | 1,870 |'
 - key: risk_outlook
   title: 风险与展望
   required: true
   description: 财务风险提示、下期预测、改进建议
   source: generated
   suggested_length: medium
+  example: '**风险**: 应收账款周转45天（目标40天），A产品原材料涨价5%
+
+    **下月预测**: 营收4,100万，毛利率目标42%'
 system_prompt: 你是一个财务分析专家。严格遵守会计准则，数据准确是第一原则。对异常波动重点关注并分析原因。所有数据必须来源于数据源。
 suggested_charts:
 - bar

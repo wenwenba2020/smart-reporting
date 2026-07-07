@@ -10,36 +10,72 @@ sections:
   description: 今日销售总体情况和关键亮点
   source: generated
   suggested_length: short
+  example: 今日整体销售业绩表现良好，总销售额达85万元，完成日目标的106%。广东省区域表现突出，新客户转化率持续提升。
 - key: sales_metrics
   title: 销售指标
   required: true
   description: 今日销售额、订单量、客单价、转化率等核心指标
   source: generated
   suggested_length: medium
+  example: '| 指标 | 今日 | 昨日 | 环比 | 月累计 |
+
+    |------|------|------|------|--------|
+
+    | 销售额(万元) | 85 | 78 | +9.0% | 520 |
+
+    | 订单量 | 32 | 28 | +14.3% | 195 |
+
+    | 客单价(元) | 26,563 | 27,857 | -4.6% | 26,667 |
+
+    | 转化率 | 18% | 15% | +3pp | 16.5% |'
 - key: channel_breakdown
   title: 渠道/区域分布
   required: false
   description: 各渠道/区域的销售分布和对比
   source: generated
   suggested_length: medium
+  example: '| 渠道 | 销售额(万元) | 订单量 | 占比 |
+
+    |------|-------------|--------|------|
+
+    | 线下门店 | 42 | 15 | 49.4% |
+
+    | 电商平台 | 28 | 11 | 32.9% |
+
+    | 大客户直销 | 12 | 4 | 14.1% |
+
+    | 渠道代理 | 3 | 2 | 3.5% |'
 - key: top_performers
   title: 销售亮点
   required: false
   description: Top销售员/门店/产品，大单记录
   source: generated
   suggested_length: short
+  example: '- **Top 销售**: 张三（线下门店，日销售12万元，签约1家新客户）
+
+    - **Top 门店**: 深圳旗舰店（日销售18万元，客流量增长20%）
+
+    - **大单记录**: 广州XX集团采购订单，合同额8万元'
 - key: issues_alerts
   title: 异常与预警
   required: true
   description: 数据异常、客户投诉、库存风险等需要关注的问题
   source: generated
   suggested_length: medium
+  example: '- ⚠️ 库存预警：A产品库存仅剩3天，需紧急补货
+
+    - 客户投诉：电商平台X客户反映物流延迟，已转客服处理'
 - key: tomorrow_plan
   title: 明日计划
   required: true
   description: 明日销售目标和重点工作安排
   source: generated
   suggested_length: short
+  example: '- 跟进深圳旗舰店促销活动执行
+
+    - 回访3家意向大客户，推动签约
+
+    - 协调供应链解决A产品补货问题'
 system_prompt: 你是一个销售数据分析师。快速提炼当日销售数据的关键信息，突出异常和亮点，数据要准确。
 suggested_charts:
 - bar

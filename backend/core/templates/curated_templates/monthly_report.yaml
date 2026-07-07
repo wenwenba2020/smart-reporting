@@ -4,50 +4,65 @@ category: 进度类
 parent_meta: meta_progress
 description: 适用于部门或业务的月度运营分析，全面复盘当月经营状况
 sections:
-  - key: monthly_overview
-    title: 月度总览
-    required: true
-    description: 本月经营概况、核心指标达成率、同比环比变化
-    source: generated
-    suggested_length: short
-  - key: business_review
-    title: 业务线回顾
-    required: true
-    description: 各业务线/产品线的月度表现与关键数据
-    source: generated
-    suggested_length: long
-  - key: financial_metrics
-    title: 财务指标分析
-    required: true
-    description: 收入、成本、利润等核心财务指标分析
-    source: generated
-    suggested_length: medium
-  - key: operations_metrics
-    title: 运营效率指标
-    required: true
-    description: 人效、转化率、客户满意度等运营效率指标
-    source: generated
-    suggested_length: medium
-  - key: project_progress
-    title: 重点项目进展
-    required: true
-    description: 本月重点项目的推进情况与里程碑达成
-    source: generated
-    suggested_length: medium
-  - key: next_month_plan
-    title: 下月计划与目标
-    required: true
-    description: 下月重点工作安排、目标设定与资源配置
-    source: generated
-    suggested_length: medium
-  - key: risk_assessment
-    title: 风险评估
-    required: false
-    description: 当前面临的经营风险及应对预案
-    source: generated
-    suggested_length: short
-system_prompt: |
-  你是一个企业运营管理专家。请基于数据源中的运营数据，全面分析本月经营状况。
+- key: monthly_overview
+  title: 月度总览
+  required: true
+  description: 本月经营概况、核心指标达成率、同比环比变化
+  source: generated
+  suggested_length: short
+- key: business_review
+  title: 业务线回顾
+  required: true
+  description: 各业务线/产品线的月度表现与关键数据
+  source: generated
+  suggested_length: long
+- key: financial_metrics
+  title: 财务指标分析
+  required: true
+  description: 收入、成本、利润等核心财务指标分析
+  source: generated
+  suggested_length: medium
+- key: operations_metrics
+  title: 运营效率指标
+  required: true
+  description: 人效、转化率、客户满意度等运营效率指标
+  source: generated
+  suggested_length: medium
+- key: project_progress
+  title: 重点项目进展
+  required: true
+  description: 本月重点项目的推进情况与里程碑达成
+  source: generated
+  suggested_length: medium
+- key: next_month_plan
+  title: 下月计划与目标
+  required: true
+  description: 下月重点工作安排、目标设定与资源配置
+  source: generated
+  suggested_length: medium
+  example: '- **8月目标**: 营收4,100万元（环比+6.5%）
+
+    - 启动东莞/佛山新市场开拓计划
+
+    - 上线新版CRM系统，提升销售管理效率
+
+    - 组织华南区Q3渠道合作伙伴大会'
+- key: risk_assessment
+  title: 风险评估
+  required: false
+  description: 当前面临的经营风险及应对预案
+  source: generated
+  suggested_length: short
+system_prompt: '你是一个企业运营管理专家。请基于数据源中的运营数据，全面分析本月经营状况。
+
   数据对比要包含环比和同比，分析要深入业务本质，目标设定要符合SMART原则。
+
   报告面向管理层，语言要精炼专业、结论要有数据支撑。
-suggested_charts: [bar, line, pie, table, funnel]
+
+  '
+suggested_charts:
+- bar
+- line
+- pie
+- table
+- funnel
