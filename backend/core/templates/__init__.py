@@ -18,6 +18,7 @@ def _dict_to_template(data: dict) -> ReportTemplate:
             max_matches=s.get("max_matches", 3),
             fallback=s.get("fallback", "generated"),
             suggested_length=s.get("suggested_length", "medium"),
+            example=s.get("example", ""),
         ))
     return ReportTemplate(
         template_id=data["template_id"],

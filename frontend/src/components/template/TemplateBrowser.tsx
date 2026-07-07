@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Search, Plus, X, Save, Trash2, Edit3 } from 'lucide-react';
+import { Layout, Search, Plus, X, Save, Trash2, Edit3, Wand2 } from 'lucide-react';
 import { reportApi } from '../../api/reportClient';
 import { Badge } from '../ui/Badge';
 
@@ -13,7 +13,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 interface TemplateDetail {
   template_id: string; name: string; category: string; description: string;
   system_prompt: string; is_custom: boolean;
-  sections: Array<{key:string; title:string; required:boolean; description:string; source:string; suggested_length:string}>;
+  sections: Array<{key:string; title:string; required:boolean; description:string; source:string; suggested_length:string; example?:string}>;
 }
 
 export function TemplateBrowser() {
@@ -35,6 +35,24 @@ export function TemplateBrowser() {
     system_prompt: string; sections: any[];
   }>({ name: '', category: '进度类', description: '', system_prompt: '', sections: [] });
   const [saving, setSaving] = useState(false);
+  const [magicWanding, setMagicWanding] = useState(false);
+  const [exampleText, setExampleText] = useState('');
+
+  const handleMagicWand = async () => {
+    if (!exampleText.trim() || editData.sections.length === 0) return;
+    setMagicWanding(true);
+    try {
+      const result = await reportApi.magicWand(exampleText, editData.sections.map(s => ({key:s.key, title:s.title, description:s.description||''})));
+      if (result?.sections) {
+        const newSections = editData.sections.map(s => {
+          const match = result.sections.find((r:any) => r.key === s.key);
+          return match ? {...s, example: match.content} : s;
+        });
+        setEditData(p => ({...p, sections: newSections}));
+      }
+    } catch(e) { alert('转换失败: ' + (e instanceof Error ? e.message : e)); }
+    finally { setMagicWanding(false); }
+  };
 
   useEffect(() => { loadTemplates(); }, []);
 
@@ -197,15 +215,23 @@ export function TemplateBrowser() {
                 <h4 className="text-xs font-semibold text-gray-500 mb-2">报告章节 ({detail.sections.length})</h4>
                 <div className="space-y-2">
                   {detail.sections.map((s, i) => (
-                    <div key={s.key} className="flex items-start gap-3 p-3 rounded-lg border border-border/30">
-                      <span className="text-xs text-muted-foreground w-6 pt-0.5">{i + 1}.</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">{s.title}</span>
-                          {s.required && <span className="text-xs px-1 rounded bg-red-50 text-red-500">必填</span>}
-                          <span className="text-xs text-muted-foreground">{s.source === 'enterprise_ppt' ? '🏢PPT库' : '✍️生成'}</span>
+                    <div key={s.key} className="p-3 rounded-lg border border-border/30">
+                      <div className="flex items-start gap-3">
+                        <span className="text-xs text-muted-foreground w-6 pt-0.5">{i + 1}.</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium">{s.title}</span>
+                            {s.required && <span className="text-xs px-1 rounded bg-red-50 text-red-500">必填</span>}
+                            <span className="text-xs text-muted-foreground">{s.source === 'enterprise_ppt' ? '🏢PPT库' : '✍️生成'}</span>
+                          </div>
+                          {s.description && <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>}
+                          {s.example && (
+                            <details className="mt-2">
+                              <summary className="text-xs text-amber-600 cursor-pointer hover:text-amber-700">📋 查看示例</summary>
+                              <pre className="mt-1 p-2 bg-amber-50 rounded text-xs whitespace-pre-wrap border border-amber-100">{s.example}</pre>
+                            </details>
+                          )}
                         </div>
-                        {s.description && <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>}
                       </div>
                     </div>
                   ))}
@@ -249,22 +275,47 @@ export function TemplateBrowser() {
                 <textarea className="w-full mt-1 p-2 text-sm border rounded-lg font-mono" rows={3} value={editData.system_prompt}
                   onChange={e => setEditData(p => ({...p, system_prompt: e.target.value}))} placeholder="LLM 提示词" />
               </div>
-              <div>
+              {/* Magic Wand: Example → JSON */}
+              <div className="p-3 rounded-lg border-2 border-dashed border-amber-300 bg-amber-50">
                 <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-semibold text-amber-800 flex items-center gap-1">
+                    <Wand2 className="w-3.5 h-3.5" />AI 魔术棒 — 示例转结构化JSON
+                  </label>
+                  <button onClick={handleMagicWand} disabled={magicWanding || !exampleText.trim()}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-amber-600 text-white text-xs rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors">
+                    <Wand2 className={`w-3 h-3 ${magicWanding ? 'animate-spin' : ''}`} />
+                    {magicWanding ? '转换中...' : '转换为JSON示例'}
+                  </button>
+                </div>
+                <textarea className="w-full p-3 text-sm border border-amber-200 rounded-lg bg-white resize-none"
+                  rows={4} value={exampleText}
+                  onChange={e => setExampleText(e.target.value)}
+                  placeholder="在此粘贴非结构化的示例报告文本，点击魔术棒将自动转换为各章节的JSON结构化示例内容..." />
+                <p className="text-xs text-amber-600 mt-1">粘贴非结构化示例 → AI自动转换为每个章节的结构化JSON → 保存为模板示例</p>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2 mt-4">
                   <label className="text-xs font-medium">章节 ({editData.sections.length})</label>
                   <button onClick={() => setEditData(p => ({...p, sections: [...p.sections, {key: `section_${p.sections.length+1}`, title: `新章节`, required: false, description: '', source: 'generated', suggested_length: 'medium'}]}))}
                     className="text-xs text-primary hover:underline">+ 添加章节</button>
                 </div>
                 <div className="space-y-2 max-h-60 overflow-y-auto">
                   {editData.sections.map((s, i) => (
-                    <div key={i} className="flex items-center gap-2 p-2 rounded border border-border/30">
-                      <span className="text-xs text-muted-foreground w-5">{i+1}.</span>
-                      <input className="flex-1 text-xs p-1.5 border rounded" value={s.title}
-                        onChange={e => { const ns = [...editData.sections]; ns[i] = {...ns[i], title: e.target.value}; setEditData(p => ({...p, sections: ns})); }} placeholder="章节标题" />
-                      <input className="w-24 text-xs p-1.5 border rounded" value={s.key}
-                        onChange={e => { const ns = [...editData.sections]; ns[i] = {...ns[i], key: e.target.value}; setEditData(p => ({...p, sections: ns})); }} placeholder="key" />
-                      <button onClick={() => { const ns = editData.sections.filter((_, j) => j !== i); setEditData(p => ({...p, sections: ns})); }}
-                        className="p-1 text-red-400 hover:text-red-600"><X className="w-3 h-3" /></button>
+                    <div key={i} className="p-2 rounded border border-border/30">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground w-5">{i+1}.</span>
+                        <input className="flex-1 text-xs p-1.5 border rounded" value={s.title}
+                          onChange={e => { const ns = [...editData.sections]; ns[i] = {...ns[i], title: e.target.value}; setEditData(p => ({...p, sections: ns})); }} placeholder="章节标题" />
+                        <input className="w-24 text-xs p-1.5 border rounded" value={s.key}
+                          onChange={e => { const ns = [...editData.sections]; ns[i] = {...ns[i], key: e.target.value}; setEditData(p => ({...p, sections: ns})); }} placeholder="key" />
+                        <button onClick={() => { const ns = editData.sections.filter((_, j) => j !== i); setEditData(p => ({...p, sections: ns})); }}
+                          className="p-1 text-red-400 hover:text-red-600"><X className="w-3 h-3" /></button>
+                      </div>
+                      <textarea className="w-full mt-1 p-1.5 text-xs border rounded bg-muted/30 resize-none" rows={2}
+                        value={s.example || ''}
+                        onChange={e => { const ns = [...editData.sections]; ns[i] = {...ns[i], example: e.target.value}; setEditData(p => ({...p, sections: ns})); }}
+                        placeholder="该章节的示例输出（可选，供AI参考）" />
                     </div>
                   ))}
                 </div>

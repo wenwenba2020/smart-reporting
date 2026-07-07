@@ -38,6 +38,7 @@ class SectionDef:
     max_matches: int = 3
     fallback: str = "generated"
     suggested_length: str = "medium"
+    example: str = ""                         # example output for this section
 
     def __post_init__(self):
         # Backward compatibility: if id/heading are set but key/title aren't, sync them

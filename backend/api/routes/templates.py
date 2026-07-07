@@ -4,6 +4,7 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException, Query
 
 from backend.core.templates import template_store, TEMPLATES_DIR
+from backend.core.llm.client import get_llm_client
 
 router = APIRouter(prefix="/templates", tags=["templates"])
 
@@ -67,6 +68,7 @@ async def get_template(template_id: str):
                     "max_matches": s.max_matches,
                     "fallback": s.fallback,
                     "suggested_length": s.suggested_length,
+                    "example": getattr(s, 'example', ''),
                 }
                 for s in tmpl.sections
             ],
@@ -149,3 +151,42 @@ async def delete_template(template_id: str):
     filepath.unlink()
     template_store._load_all()
     return {"code": 200, "msg": "deleted", "data": None}
+
+
+@router.post("/magic-wand")
+async def magic_wand(body: dict):
+    """AI magic wand: convert unstructured example text into structured report JSON.
+
+    Input: {"text": "非结构化示例文本...", "sections": [{"key":"s1","title":"数据概览"},...]}
+    Output: structured JSON matching the report format
+    """
+    text = body.get("text", "")
+    sections = body.get("sections", [])
+
+    if not text.strip():
+        raise HTTPException(400, "text is required")
+
+    llm = get_llm_client()
+    sections_desc = "\n".join(f"- {s.get('key')}: {s.get('title')} — {s.get('description', '')}" for s in sections)
+
+    prompt = f"""你是一个报告结构化专家。请将以下非结构化的示例文本转换为结构化的JSON报告格式。
+
+## 报告章节定义
+{sections_desc}
+
+## 非结构化示例文本
+{text}
+
+## 要求
+1. 为每个章节生成对应的结构化内容
+2. 输出格式为 JSON: {{"sections": [{{"key": "章节key", "title": "章节标题", "content": "该章节的结构化Markdown内容"}}]}}
+3. 保持原文的数据和关键信息，用专业报告语言组织
+4. 只输出 JSON，不要有其他文字
+
+请生成 JSON:"""
+
+    try:
+        result = await llm.chat_json(system_prompt="Convert unstructured text to structured report JSON.", user_message=prompt)
+        return {"code": 200, "msg": "ok", "data": result}
+    except Exception as e:
+        raise HTTPException(500, f"Magic wand conversion failed: {str(e)}")

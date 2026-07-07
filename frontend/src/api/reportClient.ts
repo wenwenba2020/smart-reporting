@@ -87,6 +87,9 @@ export const reportApi = {
   deleteTemplate: (id: string) =>
     request<{ template_id: string }>(`/templates/${id}`, { method: 'DELETE' }),
 
+  magicWand: (text: string, sections: Array<{key:string; title:string; description?:string}>) =>
+    request<{ sections: Array<{key:string; title:string; content:string}> }>('/templates/magic-wand', { method: 'POST', body: JSON.stringify({ text, sections }) }),
+
   // ── Reports: Intent ──────────────────────────────────────────
   recognizeIntent: (userQuery: string, sourceIds: string[]) =>
     request<IntentResponse>('/reports/intent', {
