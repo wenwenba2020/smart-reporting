@@ -10,18 +10,41 @@ sections:
   description: 姓名、部门、岗位、考核周期等基本信息
   source: generated
   suggested_length: short
+  example: '**姓名**: 张三 | **部门**: 华南销售部 | **岗位**: 销售经理 | **考核周期**: 2026年Q3
+
+    入职日期: 2022-03-15 | 上期评级: A'
 - key: kpi_summary
   title: KPI总览
   required: true
   description: 各项KPI指标的完成情况一览
   source: generated
   suggested_length: medium
+  example: '| KPI指标 | 目标值 | 实际值 | 达成率 | 权重 | 得分 |
+
+    |---------|--------|--------|--------|------|------|
+
+    | 销售额(万元) | 3,500 | 3,675 | 105% | 40% | 42.0 |
+
+    | 回款率 | 95% | 93% | 98% | 25% | 24.5 |
+
+    | 客户满意度 | 4.0 | 4.2 | 105% | 20% | 21.0 |
+
+    | 新客户数 | 25 | 30 | 120% | 15% | 18.0 |
+
+    | **综合评分** | | | | | **91.5 (A)** |'
 - key: metric_detail
   title: 指标逐项分析
   required: true
   description: 每项KPI的详细数据、达成率、趋势分析
   source: generated
   suggested_length: long
+  example: '**销售额**: Q3目标3,500万，实际完成3,675万，达成率105%，同比增长12%。其中8月单月突破1,300万创历史新高。
+
+
+    **回款率**: 季度回款率93%，略低于目标95%。主要受2家大客户付款周期延长影响，已制定专项催款计划。
+
+
+    **客户满意度**: 综合评分4.2/5，较上季度提升0.3分。售后响应速度改善明显。'
 - key: behavior_assessment
   title: 行为表现评估
   required: false
@@ -34,12 +57,34 @@ sections:
   description: 综合评分、绩效等级、突出贡献与待改进项
   source: generated
   suggested_length: medium
+  example: '**综合评分**: 91.5分 | **绩效等级**: A（优秀）
+
+
+    **突出贡献**:
+
+    - Q3签署深圳XX集团年度框架协议（合同额500万元）
+
+    - 带领团队超额完成季度销售目标
+
+
+    **待改进项**:
+
+    - 回款管理需加强，目标Q4回款率达到96%
+
+    - 团队新人培养进度偏慢'
 - key: development_plan
   title: 发展建议
   required: false
   description: 职业发展方向、培训建议、下期目标
   source: generated
   suggested_length: medium
+  example: '1. **领导力提升**: 参加Q4管理培训课程《高效团队管理》，目标带领2名新人完成首单
+
+    2. **数据分析**: 学习Python基础，提升销售数据自主分析能力
+
+    3. **回款管理**: 建立Top20客户回款预警机制
+
+    4. **行业深耕**: 每月输出1份行业分析报告，提升专业影响力'
 system_prompt: '你是一个专业的HR绩效评估顾问。请基于数据源中的员工数据，客观公正地评估各项KPI完成情况。
 
   评估要量化，评价要具体，建议要有针对性。注意保护员工隐私，评价语言要建设性。
