@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Search, Plus, X, Save, Trash2, Edit3, Wand2 } from 'lucide-react';
+import { Layout, Search, Plus, X, Save, Trash2, Edit3, Wand2, FileText, Code } from 'lucide-react';
 import { reportApi } from '../../api/reportClient';
 import { Badge } from '../ui/Badge';
 
@@ -35,6 +35,7 @@ export function TemplateBrowser() {
     system_prompt: string; sections: any[];
   }>({ name: '', category: '进度类', description: '', system_prompt: '', sections: [] });
   const [saving, setSaving] = useState(false);
+  const [exampleTab, setExampleTab] = useState<'preview' | 'json'>('preview');
   const [magicWanding, setMagicWanding] = useState(false);
   const [exampleText, setExampleText] = useState('');
 
@@ -213,30 +214,66 @@ export function TemplateBrowser() {
               )}
               <div>
                 <h4 className="text-xs font-semibold text-gray-500 mb-2">报告章节 ({detail.sections.length})</h4>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   {detail.sections.map((s, i) => (
-                    <div key={s.key} className="p-3 rounded-lg border border-border/30">
-                      <div className="flex items-start gap-3">
-                        <span className="text-xs text-muted-foreground w-6 pt-0.5">{i + 1}.</span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium">{s.title}</span>
-                            {s.required && <span className="text-xs px-1 rounded bg-red-50 text-red-500">必填</span>}
-                            <span className="text-xs text-muted-foreground">{s.source === 'enterprise_ppt' ? '🏢PPT库' : '✍️生成'}</span>
-                          </div>
-                          {s.description && <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>}
-                          {s.example && (
-                            <details className="mt-2">
-                              <summary className="text-xs text-amber-600 cursor-pointer hover:text-amber-700">📋 查看示例</summary>
-                              <pre className="mt-1 p-2 bg-amber-50 rounded text-xs whitespace-pre-wrap border border-amber-100">{s.example}</pre>
-                            </details>
-                          )}
+                    <div key={s.key} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/30">
+                      <span className="text-xs text-muted-foreground w-6 pt-0.5">{i + 1}.</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium">{s.title}</span>
+                          {s.required && <span className="text-xs px-1 rounded bg-red-50 text-red-500">必填</span>}
+                          <span className="text-xs text-muted-foreground">{s.source === 'enterprise_ppt' ? '🏢PPT库' : '✍️生成'}</span>
                         </div>
+                        {s.description && <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Report Example Panel */}
+              {detail.sections.some(s => s.example) && (
+                <div className="rounded-xl border-2 border-amber-200 overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-2 bg-amber-50 border-b border-amber-200">
+                    <h4 className="text-xs font-semibold text-amber-800 flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5" />报告示例
+                    </h4>
+                    <div className="flex bg-amber-100 rounded-lg p-0.5">
+                      <button onClick={() => setExampleTab('preview')}
+                        className={`flex items-center gap-1 px-2.5 py-1 text-xs rounded-md transition-colors ${exampleTab === 'preview' ? 'bg-white text-amber-800 shadow-sm font-medium' : 'text-amber-600 hover:text-amber-800'}`}>
+                        <FileText className="w-3 h-3" />预览
+                      </button>
+                      <button onClick={() => setExampleTab('json')}
+                        className={`flex items-center gap-1 px-2.5 py-1 text-xs rounded-md transition-colors ${exampleTab === 'json' ? 'bg-white text-amber-800 shadow-sm font-medium' : 'text-amber-600 hover:text-amber-800'}`}>
+                        <Code className="w-3 h-3" />JSON
+                      </button>
+                    </div>
+                  </div>
+                  <div className="p-4 bg-white max-h-96 overflow-y-auto">
+                    {exampleTab === 'preview' ? (
+                      <div className="text-sm space-y-4">
+                        {detail.sections.filter(s => s.example).map(s => (
+                          <div key={s.key}>
+                            <h5 className="text-sm font-bold text-gray-800 mb-1">{s.title}</h5>
+                            <div className="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed">{s.example}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <pre className="text-xs font-mono text-gray-700 whitespace-pre-wrap bg-gray-50 p-3 rounded-lg">{
+                        JSON.stringify({
+                          template: detail.name,
+                          sections: detail.sections.filter(s => s.example).map(s => ({
+                            key: s.key,
+                            title: s.title,
+                            content: s.example,
+                          })),
+                        }, null, 2)
+                      }</pre>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
